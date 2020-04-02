@@ -167,6 +167,11 @@ return [
         'time'                  => 'الوقت',
         'available'             => 'مُتاح',
         'size'                  => 'الحجم',
+        'nationality'           => 'الجنسية',
+        'situation'             => 'الحالة الاجتماعية',
+        'salary'                => 'المرتب',
+        'hire_end'               => 'تاريخ انتهاء التعاقد',
+        'end_reason'             => ' سبب الانتهاء ',
     ],
 
     'vacations' => [
