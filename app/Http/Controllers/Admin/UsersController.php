@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Role;
 use GeniusTS\HijriDate\Date as HijriDate;
+
 //use Carbon\Carbon;
 
 
@@ -33,15 +34,15 @@ class UsersController extends Controller
      * @return Response
      * @throws AuthorizationException
      */
-     public function create_barecode()
-     {
-       return view('admin.users.create_barecode');
-     }
+    public function create_barecode()
+    {
+        return view('admin.users.create_barecode');
+    }
 
-     public function create_maps()
-     {
-       return view('admin.users.maps');
-     }
+    public function create_maps()
+    {
+        return view('admin.users.maps');
+    }
 
     public function index()
     {
@@ -53,7 +54,7 @@ class UsersController extends Controller
         } else {
             $users = auth()->user()->departmentUsers();
         }
-    //echo'<PRE>';print_r($all_dept);die;
+        //echo'<PRE>';print_r($all_dept);die;
 
         return view('admin.users.index', compact('users'));
     }
@@ -63,10 +64,14 @@ class UsersController extends Controller
         return view('admin.users.leaving_coming');
     }
 
+    public function leavingComingMove(Request $request)
+    {
+        return User::all()->toArray();
+    }
+
     public function leaving_coming_show()
     {
-         $data = Comleaving::orderBy('id', 'desc')->paginate(10);
-        return view('admin.users.leaving_coming_show' , compact('data'));
+        return view('admin.users.leaving_coming_show');
     }
 
     /**
@@ -159,16 +164,16 @@ class UsersController extends Controller
         $this->authorize('update', User::class);
 
         $user = User::findOrFail($id);
-        $updateData =  $request->all();
-        if($request->isDate == 'm' and !empty($request->birth_date_m)){
+        $updateData = $request->all();
+        if ($request->isDate == 'm' and !empty($request->birth_date_m)) {
             $updateData['birth_date_h'] = Hijri::convertToHijri(@$updateData['birth_date_m'])->format('Y-m-d');
-        }else if ($request->isDate == 'h' and !empty($request->birth_date_h)){
+        } else if ($request->isDate == 'h' and !empty($request->birth_date_h)) {
             $date = $updateData['birth_date_h'];
-            $d    = new DateTime($date);
-            $updateData['birth_date_m'] = Hijri::convertToGregorian( $d->format('d'), $d->format('m'), $d->format('Y'))->format('Y-m-d');
+            $d = new DateTime($date);
+            $updateData['birth_date_m'] = Hijri::convertToGregorian($d->format('d'), $d->format('m'), $d->format('Y'))->format('Y-m-d');
 
         }
-        DB::transaction(function () use ($request, $user,$updateData) {
+        DB::transaction(function () use ($request, $user, $updateData) {
             $user->update($updateData);
             $user->roles()->sync([$request->role_id]);
 

@@ -1,13 +1,15 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>اسم الموظف</label>
+                    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1"
+                            aria-hidden="true">
 
-                    <div class="card-body">
-                        I'm an example component.
-                    </div>
+                        <option>شیراز</option>
+
+                    </select>
                 </div>
             </div>
         </div>
@@ -16,8 +18,19 @@
 
 <script>
     export default {
+        data: function () {
+            return {
+                users: [],
+                moves: [],
+                pickedUser: null,
+                startingDate: null,
+                endDate: null
+            }
+        },
         mounted() {
-            console.log('Component mounted.')
+            window.axios.get('/admin/staff/leavingComing').then((res) => {
+                console.log(res.data);
+            });
         }
     }
 </script>

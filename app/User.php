@@ -30,8 +30,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $birth_date_m
  * @property string $situation
  * @property string $remember_token
-*  @property string $lng
-*   @property string $lat
+ * @property string $lng
+ * @property string $lat
  */
 class User extends Authenticatable
 {
@@ -63,6 +63,8 @@ class User extends Authenticatable
     ];
 
     protected $hidden = ['password', 'remember_token'];
+
+    protected $with = ['leavingComing'];
 
     public function sendPasswordResetNotification($token)
     {
@@ -379,7 +381,7 @@ class User extends Authenticatable
     {
 //        dd($this->department->workingPeriods->first());
         if ($period->getStartsAt()) {
-            $cond1 =  $this->workingPeriods()
+            $cond1 = $this->workingPeriods()
                 ->whereBetween('starts_at_time', [
                     $period->getStartsAt()->subMinutes($tolerance)->toTimeString(),
                     $period->getStartsAt()->addMinutes($tolerance)->toTimeString()
@@ -516,16 +518,16 @@ class User extends Authenticatable
     {
         //dd(User::latest()->get());
         //if ($this->hasRole(3)) {
-            $depIds = $this->departments
-                ->map(function ($dep) {
-                    return $dep->id;
-                })
-                ->toArray();
+        $depIds = $this->departments
+            ->map(function ($dep) {
+                return $dep->id;
+            })
+            ->toArray();
 
-            return User::query()
-                ->whereIn('department_id', $depIds)
-                ->latest()
-                ->get();
+        return User::query()
+            ->whereIn('department_id', $depIds)
+            ->latest()
+            ->get();
         //}
 
         return User::latest()->get();
@@ -593,7 +595,6 @@ class User extends Authenticatable
 //    }
 
 
-
     public function aids()
     {
         return $this->belongsToMany(Aid::class);
@@ -612,6 +613,11 @@ class User extends Authenticatable
     public function departments()
     {
         return $this->belongsToMany(Department::class);
+    }
+
+    public function leavingComing()
+    {
+        return $this->hasMany(LeavingComing::class, 'user', 'id');
     }
 
 }

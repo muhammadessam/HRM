@@ -1,5 +1,7 @@
 <?php
-Route::get('/', function () { return redirect('/admin/home'); });
+Route::get('/', function () {
+    return redirect('/admin/home');
+});
 //coming leaving
 
 Route::get('coming/leaving', 'ComingLeaving@index')->name('coming.leaving');
@@ -24,23 +26,24 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('auth.
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
 
-     Route::get('staff/create/barecode', 'Admin\UsersController@create_barecode')->name('create.barecode');
-     Route::get('staff/create/barecode', 'Admin\UsersController@create_barecode')->name('create.barecode');
-     Route::get('staff/create/maps', 'Admin\UsersController@create_maps')->name('create.maps');
-     Route::get('staff/leaving/coming', 'Admin\UsersController@leaving_coming')->name('leaving_coming_staff');
-     Route::get('staff/leaving/coming/show', 'Admin\UsersController@leaving_coming_show')->name('leaving_coming_staff_show');
-     Route::get('ajax/leaving', 'ajax\AjaxController@leaving');
-     Route::get('ajax/coming', 'ajax\AjaxController@coming');
+    Route::get('staff/create/barecode', 'Admin\UsersController@create_barecode')->name('create.barecode');
+    Route::get('staff/create/barecode', 'Admin\UsersController@create_barecode')->name('create.barecode');
+    Route::get('staff/create/maps', 'Admin\UsersController@create_maps')->name('create.maps');
+    Route::get('staff/leaving/coming', 'Admin\UsersController@leaving_coming')->name('leaving_coming_staff');
+    Route::get('staff/leaving/coming/show', 'Admin\UsersController@leaving_coming_show')->name('leaving_coming_staff_show');
+    Route::get('/staff/leavingComing', 'Admin\UsersController@leavingComingMove');
+    Route::get('ajax/leaving', 'ajax\AjaxController@leaving');
+    Route::get('ajax/coming', 'ajax\AjaxController@coming');
 
-     Route::get('ajax/lat/lng', 'ajax\AjaxController@lat_lng');
+    Route::get('ajax/lat/lng', 'ajax\AjaxController@lat_lng');
 
-     Route::get('ajax/barcode/generate', 'ajax\AjaxController@br_generate');
-     Route::get('ajax/rqcode/generate', 'ajax\AjaxController@rq_generate');
+    Route::get('ajax/barcode/generate', 'ajax\AjaxController@br_generate');
+    Route::get('ajax/rqcode/generate', 'ajax\AjaxController@rq_generate');
 
-     Route::get('ajax/barcode/download', 'ajax\AjaxController@br_download');
-     Route::get('ajax/rqcode/download', 'ajax\AjaxController@rq_download');
+    Route::get('ajax/barcode/download', 'ajax\AjaxController@br_download');
+    Route::get('ajax/rqcode/download', 'ajax\AjaxController@rq_download');
 
-     Route::get('ajax/search', 'ajax\AjaxController@search');
+    Route::get('ajax/search', 'ajax\AjaxController@search');
 
     Route::get('/home', 'HomeController@index');
 

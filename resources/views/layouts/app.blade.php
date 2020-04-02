@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <head>
     @include('partials.head')
     @yield('style')
