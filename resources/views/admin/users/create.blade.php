@@ -27,6 +27,7 @@ $ps = \App\Position::all();
                       <center>
                         <a href="#skills" data-toggle="tab" style="font-size:20px;color:#000;"
                            aria-expanded="true">@lang('quickadmin.users.infos.skills')</a>
+                      </center>
                     </li>
                     <li style="width:15%;">
                       <center>

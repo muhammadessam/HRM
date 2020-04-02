@@ -80,12 +80,12 @@ class UsersController extends Controller
 
         $this->authorize('create', User::class);
 
-        $roles = Role::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        $degrees = Degree::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        $departments = Department::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        $specialties = Specialty::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        $courses = Course::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        $vacations = Vacation::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $roles = Role::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '0');
+        $degrees = Degree::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '0');
+        $departments = Department::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '0');
+        $specialties = Specialty::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '0');
+        $courses = Course::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '0');
+        $vacations = Vacation::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '0');
 
         return view('admin.users.create', compact('roles', 'degrees', 'departments', 'specialties', 'courses', 'vacations'));
     }
@@ -99,6 +99,31 @@ class UsersController extends Controller
      */
     public function store(StoreUsersRequest $request)
     {
+        $customMessages = [
+            'required' => 'خانة attribute: مطلوبة '
+        ];
+        $validatedData = $request->validate([
+            'name' => "required",
+            'email' => "required",
+            'password' => "required",
+            'matriculate' => "required",
+            'identity_number' => "required",
+            'sex' => "required",
+            'salary' => "required",
+            'hire_date' => "required",
+            'phone' => "required",
+            'address' => "required",
+            'birth_date_m' => "required",
+            'situation' => "required",
+            'nationality' => "required",
+            'hire_end' => "required",
+            'end_reason' => "required",
+            'degree_id' => "required",
+            'department_id' => "required",
+            'specialty_id' => "required",
+        ],
+            $customMessages
+        );
         $this->authorize('create', User::class);
 
 
