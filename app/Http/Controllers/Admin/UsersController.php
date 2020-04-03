@@ -8,6 +8,7 @@ use App\Course;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUsersRequest;
 use App\Http\Requests\Admin\UpdateUsersRequest;
+use App\LeavingComing;
 use App\Specialty;
 use App\User;
 use App\Model\Comleaving;
@@ -66,7 +67,7 @@ class UsersController extends Controller
 
     public function leavingComingMove(Request $request)
     {
-        return User::all()->toArray();
+        return ["users" => User::all()->toArray(), "moves" => LeavingComing::all()->toArray()];
     }
 
     public function leaving_coming_show()
