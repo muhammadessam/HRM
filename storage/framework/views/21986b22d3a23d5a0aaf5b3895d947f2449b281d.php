@@ -4,7 +4,7 @@
 <head>
     <?php echo $__env->make('partials.head', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php echo $__env->yieldContent('style'); ?>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="<?php echo e(asset('adminlte/css/alt/AdminLTE-select2.css')); ?>" rel="stylesheet" />
     <style>
         .nav-collapse {
             margin-right: 230px !important;

@@ -1,90 +1,137 @@
 <template>
     <div class="container">
-        <div class="row">
-            <div class="col-lg-4">
-                <select v-model="userID" class="form-control" style="width:100%">
-                    <option v-for="user in users" :value="user.id">{{user.name}}</option>
-                </select>
-            </div>
+        <div style="margin-bottom:20px;">
+            <button class="btn btn-primary" @click="filterByUSer = true,filterByMoves =false ,filterByCat = false">المستخدم</button>
+            <button class="btn btn-primary" @click="filterByUSer = false,filterByMoves =true ,filterByCat = false">الحركات</button>
+            <button class="btn btn-primary" @click="filterByUSer = false,filterByMoves =false ,filterByCat = true">الاقسام</button>
         </div>
-        <div class="box" style="margin-top:50px;">
+        <div v-if="filterByUSer">
+            <div class="row">
+                <div class="col-lg-4">
+                    <select v-model="userID" class="form-control" style="width:100%">
+                        <option value=""></option>
+                        <option v-for="user in users" :value="user.id">{{user.name}}</option>
+                    </select>
+                    <button style="margin-top:10px;" @click="userID = ''" class="btn btn-info">مسح</button>
+                </div>
 
-            <div class="box-body">
-                <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                    <div class="row">
-                        <div class="col-sm-6"></div>
-                        <div class="col-sm-6"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <table id="example2" class="table table-bordered table-hover dataTable" role="grid"
-                                   aria-describedby="example2_info">
-                                <thead>
-                                <tr role="row">
-                                    <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                        colspan="1" aria-sort="ascending"
-                                        aria-label="Rendering engine: activate to sort column descending">الحالة
-                                    </th>
-                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
-                                        aria-label="Browser: activate to sort column ascending">الوقت
-                                    </th>
-                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
-                                        aria-label="Platform(s): activate to sort column ascending">اجراء
-                                    </th>
+                <div class="col-lg-4">
+                    <input v-model="startDate" type="date" class="form-control" dir="rtl" style="width: 100%;">
+                    <button style="margin-top:10px;" @click="startDate = ''" class="btn btn-info">مسح</button>
+                </div>
+                <div class="col-lg-4">
+                    <input v-model="endDate" type="date" class="form-control" style="width: 100%;" dir="rtl">
+                    <button style="margin-top:10px;" @click="endDate = ''" class="btn btn-info">مسح</button>
+                </div>
 
-                                </tr>
-                                </thead>
-                                <tbody>
+            </div>
+            <div class="box" style="margin-top:50px;">
+                <h1 v-if="userID ==''" style="text-align:center;margin-bottom:10px;" >لم تقم باختيار موظف</h1>
+                <div class="box-body" v-if="userID!=''">
+                    <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                        <div class="row">
+                            <div class="col-sm-6"></div>
+                            <div class="col-sm-6"></div>
+                        </div>
+                        <div class="row" >
+                            <div class="col-sm-12">
+                                <table id="example2"  class="table table-bordered table-hover dataTable" role="grid"
+                                       aria-describedby="example2_info">
+                                    <thead>
+                                    <tr role="row">
 
-                                <template v-for="l in userMoves">
-                                    <tr role="row" class="odd">
-                                        <td class="sorting_1">{{l.status=='l' ? "انصراف" : "حضور"}}</td>
-                                        <td>{{l.created_at}}</td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger">حذف</button>
-                                        </td>
+                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
+                                            colspan="1" aria-sort="ascending"
+                                            aria-label="Rendering engine: activate to sort column descending">الحالة
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                            aria-label="Browser: activate to sort column ascending">الوقت
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                            aria-label="Platform(s): activate to sort column ascending">اجراء
+                                        </th>
+
                                     </tr>
-                                </template>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+
+                                    <template v-for="l in filteredMoves">
+                                        <tr role="row" class="odd">
+                                            <td style="text-align:center"><span :class="l.status=='l'?'label label-danger':'label label-success'">{{l.status=='l' ? "انصراف" : "حضور"}}</span></td>
+                                            <td>{{moment(l.created_at).locale('ar-sa').format('D MMMM YYYY, h:mm a')}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger">حذف</button>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div><!-- /.box-body -->
+                </div><!-- /.box-body -->
+            </div>
+        </div>
+        <div v-if="filterByMoves">
+
+        </div>
+        <div v-if="filterByCat">
+
         </div>
     </div>
 </template>
 
 <script>
+
     export default {
         data: function () {
             return {
-
+                filterByUSer :false,
+                filterByCat:false,
+                filterByMoves:false,
                 users: [],
                 moves: [],
-                userID: 1,
-                selectedUser : [],
+                userID: '',
+                selectedUser: [],
                 userMoves: [],
-                startingDate: '',
+                startDate: '',
                 endDate: ''
             }
         },
         watch: {
-            userID:function (val) {
-                this.selectedUser = this.users.filter((user)=>{
-                    return user.id==val;
+            userID: function (val) {
+                this.selectedUser = this.users.filter((user) => {
+                    return user.id == val;
                 })[0];
-                this.userMoves = this.selectedUser.leaving_coming;
+                if (this.selectedUser != undefined)
+                    this.userMoves = this.selectedUser.leaving_coming;
+                else if (this.selectedUser == undefined) {
+                    this.userMoves = [];
+                }
             }
         },
-        computed: {},
+        filters: {},
+        computed: {
+            filteredMoves() {
+                return this.userMoves.filter((move) => {
+                    if (this.startDate == "" && this.endDate == "")
+                        return moment(move.created_at).isSameOrAfter(0, 'day') && moment(move.created_at).isSameOrBefore(undefined, 'day');
+                    else if(this.startDate != "" && this.endDate!="")
+                        return moment(move.created_at).isBetween(this.startDate, this.endDate, 'day', '[]');
+                    else if (this.startDate != "")
+                        return moment(move.created_at).isSameOrAfter(this.startDate, 'day');
+                    else if (this.endDate!="")
+                        return moment(move.created_at).isSameOrBefore(this.endDate, 'day');
+
+                })
+            }
+        },
         methods: {},
         mounted() {
             window.axios.get('/admin/staff/leavingComing').then((res) => {
                 this.users = res.data.users;
                 this.moves = res.data.moves;
                 this.userID = this.users[0].id;
-                this.pickedUser = this.users[0];
             });
         }
     }

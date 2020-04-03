@@ -70,9 +70,16 @@ class UsersController extends Controller
         return ["users" => User::all()->toArray(), "moves" => LeavingComing::all()->toArray()];
     }
 
-    public function leaving_coming_show()
+    public function leaving_coming_show(Request $request)
     {
-        return view('admin.users.leaving_coming_show');
+        $data = null;
+        if ($request->has('user_id')) {
+            $data = User::with(['leavingComing' => function ($query) {
+                return $query->whereDate('created_at', '>=', request()->get('start_date'))->whereDate('created_at', '<=', request()->get('end_date'));
+            }])->where('id', request()->get('user_id'))->get();
+        }
+
+        return view('admin.users.leaving_coming_show', compact('data'));
     }
 
     /**

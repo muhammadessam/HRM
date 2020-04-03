@@ -4,7 +4,7 @@
 <head>
     @include('partials.head')
     @yield('style')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{asset('adminlte/css/alt/AdminLTE-select2.css')}}" rel="stylesheet" />
     <style>
         .nav-collapse {
             margin-right: 230px !important;
