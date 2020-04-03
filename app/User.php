@@ -64,7 +64,6 @@ class User extends Authenticatable
 
     protected $hidden = ['password', 'remember_token'];
 
-    protected $with = ['leavingComing'];
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));

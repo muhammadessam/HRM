@@ -1780,10 +1780,83 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      filterByUSer: false,
+      filterByUSer: true,
       filterByCat: false,
       filterByMoves: false,
       users: [],
@@ -1805,24 +1878,46 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
-  filters: {},
   computed: {
-    filteredMoves: function filteredMoves() {
+    userFilteredMoves: function userFilteredMoves() {
       var _this = this;
 
       return this.userMoves.filter(function (move) {
         if (_this.startDate == "" && _this.endDate == "") return moment(move.created_at).isSameOrAfter(0, 'day') && moment(move.created_at).isSameOrBefore(undefined, 'day');else if (_this.startDate != "" && _this.endDate != "") return moment(move.created_at).isBetween(_this.startDate, _this.endDate, 'day', '[]');else if (_this.startDate != "") return moment(move.created_at).isSameOrAfter(_this.startDate, 'day');else if (_this.endDate != "") return moment(move.created_at).isSameOrBefore(_this.endDate, 'day');
       });
+    },
+    filteredMoves: function filteredMoves() {
+      var _this2 = this;
+
+      return this.moves.filter(function (move) {
+        if (_this2.startDate == "" && _this2.endDate == "") return moment(move.created_at).isSameOrAfter(0, 'day') && moment(move.created_at).isSameOrBefore(undefined, 'day');else if (_this2.startDate != "" && _this2.endDate != "") return moment(move.created_at).isBetween(_this2.startDate, _this2.endDate, 'day', '[]');else if (_this2.startDate != "") return moment(move.created_at).isSameOrAfter(_this2.startDate, 'day');else if (_this2.endDate != "") return moment(move.created_at).isSameOrBefore(_this2.endDate, 'day');
+      });
     }
   },
-  methods: {},
+  methods: {
+    deleteMove: function deleteMove(move) {
+      var _this3 = this;
+
+      var data = {
+        move_id: move.id
+      };
+      window.axios.post('/admin/staff/deleteLeavingComing', data).then(function (res) {
+        console.log(res.data.moves);
+        _this3.users = res.data.users;
+        _this3.moves = res.data.moves;
+        _this3.userMoves = _this3.users.filter(function (user) {
+          return _this3.userID == user.id;
+        })[0].leaving_coming;
+      });
+    }
+  },
   mounted: function mounted() {
-    var _this2 = this;
+    var _this4 = this;
 
     window.axios.get('/admin/staff/leavingComing').then(function (res) {
-      _this2.users = res.data.users;
-      _this2.moves = res.data.moves;
-      _this2.userID = _this2.users[0].id;
+      _this4.users = res.data.users;
+      _this4.moves = res.data.moves;
+      _this4.userID = _this4.users[0].id;
     });
   }
 });
@@ -37069,7 +37164,11 @@ var render = function() {
             }
           }
         },
-        [_vm._v("المستخدم")]
+        [
+          _vm._v(
+            "حركة\n            الحضور والانصراف بناء علي اسم الموظف\n        "
+          )
+        ]
       ),
       _vm._v(" "),
       _c(
@@ -37084,22 +37183,11 @@ var render = function() {
             }
           }
         },
-        [_vm._v("الحركات")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              ;(_vm.filterByUSer = false),
-                (_vm.filterByMoves = false),
-                (_vm.filterByCat = true)
-            }
-          }
-        },
-        [_vm._v("الاقسام")]
+        [
+          _vm._v(
+            "حركات\n            الحضور والانصراف بناء علي التاريخ\n        "
+          )
+        ]
       )
     ]),
     _vm._v(" "),
@@ -37290,7 +37378,7 @@ var render = function() {
                                 _c(
                                   "tbody",
                                   [
-                                    _vm._l(_vm.filteredMoves, function(l) {
+                                    _vm._l(_vm.userFilteredMoves, function(l) {
                                       return [
                                         _c(
                                           "tr",
@@ -37337,11 +37425,39 @@ var render = function() {
                                                     .format(
                                                       "D MMMM YYYY, h:mm a"
                                                     )
-                                                )
+                                                ) +
+                                                  "\n                                        "
                                               )
                                             ]),
                                             _vm._v(" "),
-                                            _vm._m(2, true)
+                                            _c(
+                                              "td",
+                                              {
+                                                staticStyle: {
+                                                  "text-align": "center"
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "button",
+                                                  {
+                                                    staticClass:
+                                                      "btn btn-danger",
+                                                    attrs: { type: "button" },
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.deleteMove(l)
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                حذف\n                                            "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
                                           ]
                                         )
                                       ]
@@ -37362,7 +37478,192 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.filterByMoves ? _c("div") : _vm._e(),
+    _vm.filterByMoves
+      ? _c("div", [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.startDate,
+                    expression: "startDate"
+                  }
+                ],
+                staticClass: "form-control",
+                staticStyle: { width: "100%" },
+                attrs: { type: "date", dir: "rtl" },
+                domProps: { value: _vm.startDate },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.startDate = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-info",
+                  staticStyle: { "margin-top": "10px" },
+                  on: {
+                    click: function($event) {
+                      _vm.startDate = ""
+                    }
+                  }
+                },
+                [_vm._v("مسح")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.endDate,
+                    expression: "endDate"
+                  }
+                ],
+                staticClass: "form-control",
+                staticStyle: { width: "100%" },
+                attrs: { type: "date", dir: "rtl" },
+                domProps: { value: _vm.endDate },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.endDate = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-info",
+                  staticStyle: { "margin-top": "10px" },
+                  on: {
+                    click: function($event) {
+                      _vm.endDate = ""
+                    }
+                  }
+                },
+                [_vm._v("مسح")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box" }, [
+            _c("div", { staticClass: "box-body" }, [
+              _c(
+                "div",
+                { staticClass: "dataTables_wrapper form-inline dt-bootstrap" },
+                [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-sm-12" }, [
+                      _c(
+                        "table",
+                        {
+                          staticClass:
+                            "table table-bordered table-hover dataTable",
+                          attrs: {
+                            role: "grid",
+                            "aria-describedby": "example2_info"
+                          }
+                        },
+                        [
+                          _vm._m(3),
+                          _vm._v(" "),
+                          _c(
+                            "tbody",
+                            [
+                              _vm._l(_vm.filteredMoves, function(l) {
+                                return [
+                                  _c(
+                                    "tr",
+                                    {
+                                      staticClass: "odd",
+                                      attrs: { role: "row" }
+                                    },
+                                    [
+                                      _c(
+                                        "td",
+                                        {
+                                          staticStyle: {
+                                            "text-align": "center"
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(l.user.name))]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "td",
+                                        {
+                                          staticStyle: {
+                                            "text-align": "center"
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "span",
+                                            {
+                                              class:
+                                                l.status == "l"
+                                                  ? "label label-danger"
+                                                  : "label label-success"
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._s(
+                                                  l.status == "l"
+                                                    ? "انصراف"
+                                                    : "حضور"
+                                                )
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm
+                                              .moment(l.created_at)
+                                              .locale("ar-sa")
+                                              .format("D MMMM YYYY, h:mm a")
+                                          ) +
+                                            "\n                                        "
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _vm._m(4, true)
+                                    ]
+                                  )
+                                ]
+                              })
+                            ],
+                            2
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                ]
+              )
+            ])
+          ])
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _vm.filterByCat ? _c("div") : _vm._e()
   ])
@@ -37416,6 +37717,69 @@ var staticRenderFns = [
           [_vm._v("الوقت\n                                    ")]
         ),
         _vm._v(" "),
+        _c("th", {
+          staticClass: "sorting",
+          attrs: {
+            tabindex: "0",
+            "aria-controls": "example2",
+            rowspan: "1",
+            colspan: "1",
+            "aria-label": "Platform(s): activate to sort column ascending"
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-sm-6" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-6" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { attrs: { role: "row" } }, [
+        _c(
+          "th",
+          {
+            staticClass: "sorting_asc",
+            attrs: {
+              tabindex: "0",
+              "aria-controls": "example2",
+              rowspan: "1",
+              colspan: "1",
+              "aria-sort": "ascending",
+              "aria-label":
+                "Rendering engine: activate to sort column descending"
+            }
+          },
+          [_vm._v("الاسم\n                                    ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "sorting_asc",
+            attrs: {
+              tabindex: "0",
+              "aria-controls": "example2",
+              rowspan: "1",
+              colspan: "1",
+              "aria-sort": "ascending",
+              "aria-label":
+                "Rendering engine: activate to sort column descending"
+            }
+          },
+          [_vm._v("الحالة\n                                    ")]
+        ),
+        _vm._v(" "),
         _c(
           "th",
           {
@@ -37425,11 +37789,22 @@ var staticRenderFns = [
               "aria-controls": "example2",
               rowspan: "1",
               colspan: "1",
-              "aria-label": "Platform(s): activate to sort column ascending"
+              "aria-label": "Browser: activate to sort column ascending"
             }
           },
-          [_vm._v("اجراء\n                                    ")]
-        )
+          [_vm._v("الوقت\n                                    ")]
+        ),
+        _vm._v(" "),
+        _c("th", {
+          staticClass: "sorting",
+          attrs: {
+            tabindex: "0",
+            "aria-controls": "example2",
+            rowspan: "1",
+            colspan: "1",
+            "aria-label": "Platform(s): activate to sort column ascending"
+          }
+        })
       ])
     ])
   },
@@ -37437,7 +37812,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
+    return _c("td", { staticStyle: { "text-align": "center" } }, [
       _c(
         "button",
         { staticClass: "btn btn-danger", attrs: { type: "button" } },

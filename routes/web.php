@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('staff/leaving/coming', 'Admin\UsersController@leaving_coming')->name('leaving_coming_staff');
     Route::get('staff/leaving/coming/show', 'Admin\UsersController@leaving_coming_show')->name('leaving_coming_staff_show');
     Route::get('/staff/leavingComing', 'Admin\UsersController@leavingComingMove');
+    Route::post('/staff/deleteLeavingComing', 'Admin\UsersController@deleteLeavingComingMove');
     Route::get('ajax/leaving', 'ajax\AjaxController@leaving');
     Route::get('ajax/coming', 'ajax\AjaxController@coming');
 
