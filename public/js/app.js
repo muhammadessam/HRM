@@ -81191,135 +81191,141 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "box" }, [
-            _c("div", { staticClass: "box-body" }, [
-              _c(
-                "div",
-                { staticClass: "dataTables_wrapper form-inline dt-bootstrap" },
-                [
-                  _vm._m(2),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-sm-12" }, [
-                      _c(
-                        "table",
-                        {
-                          staticClass:
-                            "table table-bordered table-hover dataTable",
-                          attrs: {
-                            role: "grid",
-                            "aria-describedby": "example2_info"
-                          }
-                        },
-                        [
-                          _vm._m(3),
-                          _vm._v(" "),
-                          _c(
-                            "tbody",
-                            [
-                              _vm._l(_vm.filteredMoves, function(l) {
-                                return [
-                                  _c(
-                                    "tr",
-                                    {
-                                      staticClass: "odd",
-                                      attrs: { role: "row" }
-                                    },
-                                    [
-                                      _c(
-                                        "td",
-                                        {
-                                          staticStyle: {
-                                            "text-align": "center"
-                                          }
-                                        },
-                                        [_vm._v(_vm._s(l.user.name))]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "td",
-                                        {
-                                          staticStyle: {
-                                            "text-align": "center"
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "span",
-                                            {
-                                              class:
-                                                l.status == "l"
-                                                  ? "label label-danger"
-                                                  : "label label-success"
-                                            },
-                                            [
-                                              _vm._v(
-                                                _vm._s(
+          _c(
+            "div",
+            { staticClass: "box", staticStyle: { "margin-top": "50px" } },
+            [
+              _c("div", { staticClass: "box-body" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "dataTables_wrapper form-inline dt-bootstrap"
+                  },
+                  [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-sm-12" }, [
+                        _c(
+                          "table",
+                          {
+                            staticClass:
+                              "table table-bordered table-hover dataTable",
+                            attrs: {
+                              role: "grid",
+                              "aria-describedby": "example2_info"
+                            }
+                          },
+                          [
+                            _vm._m(3),
+                            _vm._v(" "),
+                            _c(
+                              "tbody",
+                              [
+                                _vm._l(_vm.filteredMoves, function(l) {
+                                  return [
+                                    _c(
+                                      "tr",
+                                      {
+                                        staticClass: "odd",
+                                        attrs: { role: "row" }
+                                      },
+                                      [
+                                        _c(
+                                          "td",
+                                          {
+                                            staticStyle: {
+                                              "text-align": "center"
+                                            }
+                                          },
+                                          [_vm._v(_vm._s(l.user.name))]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          {
+                                            staticStyle: {
+                                              "text-align": "center"
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              {
+                                                class:
                                                   l.status == "l"
-                                                    ? "انصراف"
-                                                    : "حضور"
+                                                    ? "label label-danger"
+                                                    : "label label-success"
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    l.status == "l"
+                                                      ? "انصراف"
+                                                      : "حضور"
+                                                  )
                                                 )
-                                              )
-                                            ]
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm
+                                                .moment(l.created_at)
+                                                .locale("ar-sa")
+                                                .format("D MMMM YYYY, h:mm a")
+                                            ) +
+                                              "\n                                        "
                                           )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm
-                                              .moment(l.created_at)
-                                              .locale("ar-sa")
-                                              .format("D MMMM YYYY, h:mm a")
-                                          ) +
-                                            "\n                                        "
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "td",
-                                        {
-                                          staticClass: "print-media-none",
-                                          staticStyle: {
-                                            "text-align": "center"
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "button",
-                                            {
-                                              staticClass: "btn btn-danger",
-                                              attrs: { type: "button" },
-                                              on: {
-                                                click: function($event) {
-                                                  return _vm.deleteMove(l)
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass: "print-media-none",
+                                            staticStyle: {
+                                              "text-align": "center"
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "button",
+                                              {
+                                                staticClass: "btn btn-danger",
+                                                attrs: { type: "button" },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.deleteMove(l)
+                                                  }
                                                 }
-                                              }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                                حذف\n                                            "
-                                              )
-                                            ]
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ]
-                              })
-                            ],
-                            2
-                          )
-                        ]
-                      )
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                حذف\n                                            "
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                })
+                              ],
+                              2
+                            )
+                          ]
+                        )
+                      ])
                     ])
-                  ])
-                ]
-              )
-            ])
-          ])
+                  ]
+                )
+              ])
+            ]
+          )
         ])
       : _vm._e(),
     _vm._v(" "),

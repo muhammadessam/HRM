@@ -94,7 +94,7 @@
                     <button style="margin-top:10px;" @click="endDate = ''" class="btn btn-info print-media-none">مسح</button>
                 </div>
             </div>
-            <div class="box">
+            <div class="box" style="margin-top: 50px;">
                 <div class="box-body">
                     <div class="dataTables_wrapper form-inline dt-bootstrap">
                         <div class="row">
