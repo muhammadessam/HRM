@@ -8,6 +8,7 @@ import VueTableDynamic from 'vue-table-dynamic'
 import moment from "moment";
 import BootstrapVue from "bootstrap-vue";
 
+
 require('./bootstrap');
 window.Vue = require('vue');
 

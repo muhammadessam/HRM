@@ -217,7 +217,7 @@
                     let data = {
                         move_id: move.id
                     }
-                    window.axios.post('/admin/staff/deleteLeavingComing', data).then(res => {
+                    window.axios.post(route('admin.deleteMoves'), data).then(res => {
                         console.log(res.data.moves);
                         this.users = res.data.users;
                         this.moves = res.data.moves;
@@ -232,7 +232,7 @@
             }
         },
         mounted() {
-            window.axios.get('/admin/staff/leavingComing').then((res) => {
+            window.axios.get(route('admin.getMoves')).then((res) => {
                 this.users = res.data.users;
                 this.moves = res.data.moves;
                 this.userID = this.users[0].id;

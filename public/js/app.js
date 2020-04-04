@@ -1905,7 +1905,7 @@ __webpack_require__.r(__webpack_exports__);
         var data = {
           move_id: move.id
         };
-        window.axios.post('/admin/staff/deleteLeavingComing', data).then(function (res) {
+        window.axios.post(route('admin.deleteMoves'), data).then(function (res) {
           console.log(res.data.moves);
           _this3.users = res.data.users;
           _this3.moves = res.data.moves;
@@ -1919,7 +1919,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this4 = this;
 
-    window.axios.get('/admin/staff/leavingComing').then(function (res) {
+    window.axios.get(route('admin.getMoves')).then(function (res) {
       _this4.users = res.data.users;
       _this4.moves = res.data.moves;
       _this4.userID = _this4.users[0].id;
