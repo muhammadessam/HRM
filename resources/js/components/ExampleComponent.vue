@@ -88,6 +88,7 @@
                     <input v-model="startDate" type="date" class="form-control" dir="rtl" style="width: 100%;">
                     <button style="margin-top:10px;" @click="startDate = ''" class="btn btn-info">مسح</button>
                 </div>
+
                 <div class="col-lg-4">
                     <input v-model="endDate" type="date" class="form-control" style="width: 100%;" dir="rtl">
                     <button style="margin-top:10px;" @click="endDate = ''" class="btn btn-info">مسح</button>
@@ -136,7 +137,7 @@
                                             <td>{{moment(l.created_at).locale('ar-sa').format('D MMMM YYYY, h:mm a')}}
                                             </td>
                                             <td style="text-align: center">
-                                                <button type="button" class="btn btn-danger">حذف</button>
+                                                <button type="button" @click="deleteMove(l)" class="btn btn-danger">حذف</button>
                                             </td>
                                         </tr>
                                     </template>
@@ -211,17 +212,23 @@
         },
         methods: {
             deleteMove(move) {
-                let data = {
-                    move_id: move.id
+                let r = confirm("هل تريد الحذف ؟");
+                if (r==true){
+                    let data = {
+                        move_id: move.id
+                    }
+                    window.axios.post('/admin/staff/deleteLeavingComing', data).then(res => {
+                        console.log(res.data.moves);
+                        this.users = res.data.users;
+                        this.moves = res.data.moves;
+                        this.userMoves = this.users.filter((user) => {
+                            return this.userID == user.id
+                        })[0].leaving_coming;
+                    })
+                }else{
+
                 }
-                window.axios.post('/admin/staff/deleteLeavingComing', data).then(res => {
-                    console.log(res.data.moves);
-                    this.users = res.data.users;
-                    this.moves = res.data.moves;
-                    this.userMoves = this.users.filter((user) => {
-                        return this.userID == user.id
-                    })[0].leaving_coming;
-                })
+
             }
         },
         mounted() {
