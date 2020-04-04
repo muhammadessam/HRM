@@ -8,9 +8,16 @@
                 الحضور والانصراف بناء علي التاريخ
             </button>
         </div>
+
         <div v-if="filterByUSer">
-            <div class="row">
-                <div class="col-lg-4">
+            <div Style="text-align:center">
+                <h1>حركات الحضور والانصراف</h1>
+                <label>اسم الموظف : </label>
+                <h2>{{selectedUser.name}}</h2>
+            </div>
+            <div class="row" style="display: flex">
+                <div class="col-lg-4 print-media-none">
+                    <label>الاسم</label>
                     <select v-model="userID" class="form-control" style="width:100%">
                         <option value=""></option>
                         <option v-for="user in users" :value="user.id">{{user.name}}</option>
@@ -18,11 +25,13 @@
                     <button style="margin-top:10px;" @click="userID = ''" class="btn btn-info print-media-none">مسح</button>
                 </div>
 
-                <div class="col-lg-4">
+                <div class="col-lg-4 print-input">
+                    <label>من</label>
                     <input v-model="startDate" type="date" class="form-control" dir="rtl" style="width: 100%;">
                     <button style="margin-top:10px;" @click="startDate = ''" class="btn btn-info print-media-none">مسح</button>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 print-input">
+                    <label>الي</label>
                     <input v-model="endDate" type="date" class="form-control" style="width: 100%;" dir="rtl">
                     <button style="margin-top:10px;" @click="endDate = ''" class="btn btn-info print-media-none">مسح</button>
                 </div>
@@ -83,14 +92,20 @@
             </div>
         </div>
         <div v-if="filterByMoves">
-            <div class="row">
-                <div class="col-lg-4">
-                    <input v-model="startDate" type="date" class="form-control" dir="rtl" style="width: 100%;">
+            <div Style="text-align:center">
+                <h1>حركات الحضور والانصراف</h1>
+
+            </div>
+            <div class="row" style="display: flex">
+                <div class="col-lg-4 print-input">
+                    <label>من</label>
+                    <input v-model="startDate" type="date" class="form-control print-input" dir="rtl" style="width: 100%;">
                     <button style="margin-top:10px;" @click="startDate = ''" class="btn btn-info print-media-none">مسح</button>
                 </div>
 
-                <div class="col-lg-4">
-                    <input v-model="endDate" type="date" class="form-control" style="width: 100%;" dir="rtl">
+                <div class="col-lg-4 print-input">
+                    <label>الي</label>
+                    <input v-model="endDate" type="date" class="form-control print-input" style="width: 100%;" dir="rtl">
                     <button style="margin-top:10px;" @click="endDate = ''" class="btn btn-info print-media-none">مسح</button>
                 </div>
             </div>
@@ -246,11 +261,15 @@
         }
     }
 </script>
-<style>
+<style scoped>
 
     @media print {
          .print-media-none{
              display: none;
          }
+        .print-input{
+            width: 50%;
+        }
+
     }
 </style>
