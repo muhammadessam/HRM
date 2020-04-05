@@ -1,30 +1,39 @@
 <template>
     <div class="container">
         <div style="margin-bottom:20px;">
-            <button class="btn btn-primary" @click="filterByUSer = true,filterByMoves =false ,filterByCat = false">حركة
+            <button class="btn btn-primary print-media-none" @click="filterByUSer = true,filterByMoves =false ,filterByCat = false">حركة
                 الحضور والانصراف بناء علي اسم الموظف
             </button>
-            <button class="btn btn-primary" @click="filterByUSer = false,filterByMoves =true ,filterByCat = false">حركات
+            <button class="btn btn-primary print-media-none" @click="filterByUSer = false,filterByMoves =true ,filterByCat = false">حركات
                 الحضور والانصراف بناء علي التاريخ
             </button>
         </div>
+
         <div v-if="filterByUSer">
-            <div class="row">
-                <div class="col-lg-4">
+            <div Style="text-align:center">
+                <h1>حركات الحضور والانصراف</h1>
+                <label>اسم الموظف : </label>
+                <h2>{{selectedUser.name}}</h2>
+            </div>
+            <div class="row" style="display: flex">
+                <div class="col-lg-4 print-media-none">
+                    <label>الاسم</label>
                     <select v-model="userID" class="form-control" style="width:100%">
                         <option value=""></option>
                         <option v-for="user in users" :value="user.id">{{user.name}}</option>
                     </select>
-                    <button style="margin-top:10px;" @click="userID = ''" class="btn btn-info">مسح</button>
+                    <button style="margin-top:10px;" @click="userID = ''" class="btn btn-info print-media-none">مسح</button>
                 </div>
 
-                <div class="col-lg-4">
+                <div class="col-lg-4 print-input">
+                    <label>من</label>
                     <input v-model="startDate" type="date" class="form-control" dir="rtl" style="width: 100%;">
-                    <button style="margin-top:10px;" @click="startDate = ''" class="btn btn-info">مسح</button>
+                    <button style="margin-top:10px;" @click="startDate = ''" class="btn btn-info print-media-none">مسح</button>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 print-input">
+                    <label>الي</label>
                     <input v-model="endDate" type="date" class="form-control" style="width: 100%;" dir="rtl">
-                    <button style="margin-top:10px;" @click="endDate = ''" class="btn btn-info">مسح</button>
+                    <button style="margin-top:10px;" @click="endDate = ''" class="btn btn-info print-media-none">مسح</button>
                 </div>
 
             </div>
@@ -51,7 +60,7 @@
                                             colspan="1"
                                             aria-label="Browser: activate to sort column ascending">الوقت
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1"
+                                        <th class="sorting print-media-none" tabindex="0" aria-controls="example2" rowspan="1"
                                             colspan="1"
                                             aria-label="Platform(s): activate to sort column ascending">
                                         </th>
@@ -67,7 +76,7 @@
                                             </td>
                                             <td>{{moment(l.created_at).locale('ar-sa').format('D MMMM YYYY, h:mm a')}}
                                             </td>
-                                            <td style="text-align: center">
+                                            <td style="text-align: center" class="print-media-none">
                                                 <button @click="deleteMove(l)" type="button" class="btn btn-danger">
                                                     حذف
                                                 </button>
@@ -83,18 +92,24 @@
             </div>
         </div>
         <div v-if="filterByMoves">
-            <div class="row">
-                <div class="col-lg-4">
-                    <input v-model="startDate" type="date" class="form-control" dir="rtl" style="width: 100%;">
-                    <button style="margin-top:10px;" @click="startDate = ''" class="btn btn-info">مسح</button>
+            <div Style="text-align:center">
+                <h1>حركات الحضور والانصراف</h1>
+
+            </div>
+            <div class="row" style="display: flex">
+                <div class="col-lg-4 print-input">
+                    <label>من</label>
+                    <input v-model="startDate" type="date" class="form-control print-input" dir="rtl" style="width: 100%;">
+                    <button style="margin-top:10px;" @click="startDate = ''" class="btn btn-info print-media-none">مسح</button>
                 </div>
 
-                <div class="col-lg-4">
-                    <input v-model="endDate" type="date" class="form-control" style="width: 100%;" dir="rtl">
-                    <button style="margin-top:10px;" @click="endDate = ''" class="btn btn-info">مسح</button>
+                <div class="col-lg-4 print-input">
+                    <label>الي</label>
+                    <input v-model="endDate" type="date" class="form-control print-input" style="width: 100%;" dir="rtl">
+                    <button style="margin-top:10px;" @click="endDate = ''" class="btn btn-info print-media-none">مسح</button>
                 </div>
             </div>
-            <div class="box">
+            <div class="box" style="margin-top: 50px;">
                 <div class="box-body">
                     <div class="dataTables_wrapper form-inline dt-bootstrap">
                         <div class="row">
@@ -119,7 +134,7 @@
                                             colspan="1"
                                             aria-label="Browser: activate to sort column ascending">الوقت
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1"
+                                        <th class="sorting print-media-none" tabindex="0" aria-controls="example2" rowspan="1"
                                             colspan="1"
                                             aria-label="Platform(s): activate to sort column ascending">
                                         </th>
@@ -136,8 +151,10 @@
                                             </td>
                                             <td>{{moment(l.created_at).locale('ar-sa').format('D MMMM YYYY, h:mm a')}}
                                             </td>
-                                            <td style="text-align: center">
-                                                <button type="button" @click="deleteMove(l)" class="btn btn-danger">حذف</button>
+                                            <td style="text-align: center" class="print-media-none">
+                                                <button type="button" @click="deleteMove(l)" class="btn btn-danger">
+                                                    حذف
+                                                </button>
                                             </td>
                                         </tr>
                                     </template>
@@ -151,6 +168,9 @@
         </div>
         <div v-if="filterByCat">
 
+        </div>
+        <div style="margin-top: 20px;margin-bottom:20px; text-align: center">
+            <button @click="printPage" class="btn btn-primary print-media-none">طباعة</button>
         </div>
     </div>
 </template>
@@ -213,7 +233,7 @@
         methods: {
             deleteMove(move) {
                 let r = confirm("هل تريد الحذف ؟");
-                if (r==true){
+                if (r == true) {
                     let data = {
                         move_id: move.id
                     }
@@ -224,12 +244,13 @@
                         this.userMoves = this.users.filter((user) => {
                             return this.userID == user.id
                         })[0].leaving_coming;
-                    })
-                }else{
-
+                    });
                 }
-
+            },
+            printPage() {
+                window.print();
             }
+
         },
         mounted() {
             window.axios.get(route('admin.getMoves')).then((res) => {
@@ -240,3 +261,15 @@
         }
     }
 </script>
+<style scoped>
+
+    @media print {
+         .print-media-none{
+             display: none;
+         }
+        .print-input{
+            width: 50%;
+        }
+
+    }
+</style>

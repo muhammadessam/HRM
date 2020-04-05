@@ -184,17 +184,17 @@
     @if(auth()->user()->hasRole(1))
     <div class="row">
         <div class="col-lg-3">
-            <div class="card gradient-1">
-                <div class="card-body">
-                    <h3 class="card-title text-white">الموظفين</h3>
-                    <div class="d-inline-block">
-                        <h2 class="text-white">{{$all_users->count()}}</h2>
-                    </div>
-                    <span class="float-left display-5 opacity-5">
-                    <i class="fa fa-users" aria-hidden="true"></i>
-                    </span>
+        <div class="card gradient-1">
+            <div class="card-body">
+                <h3 class="card-title text-white">الموظفين</h3>
+                <div class="d-inline-block">
+                    <h2 class="text-white">{{$employeeCount}}</h2>
                 </div>
+                <span class="float-left display-5 opacity-5">
+                <i class="fa fa-users" aria-hidden="true"></i>
+                </span>
             </div>
+        </div>
         </div>
         <div class="col-lg-3">
             <div class="card gradient-1">

@@ -10,6 +10,7 @@ use App\VacationReq;
 use DB;
 use Illuminate\Support\Facades\Auth;
 
+
 class HomeController extends Controller
 {
     public function __construct()
@@ -21,6 +22,7 @@ class HomeController extends Controller
     {
         $all_users = User::all();
         $id = auth()->user();
+        $employeeCount = $users = User::role('موظف')->get()->count();
         if ($id->department_id == 1 || auth()->user()->hasRole(1)) {
             $absentUsers = Pointing::isAbsent(today())->get();
             $presents = Pointing::isPresent(today())->get();
@@ -36,7 +38,7 @@ class HomeController extends Controller
                 return $pointing->latency_sum > 0;
             });
             $vacatedUsers = User::inVacation(today())->with('department')
-            ->where('department_id',$id->department_id)->get();
+                ->where('department_id', $id->department_id)->get();
             $upcomingAids = Aid::upcomingIn(7)->get();
         }
 
@@ -45,6 +47,6 @@ class HomeController extends Controller
         $my_user = new UserResource(User::find(Auth::user()->id));
         $vac_reqs = VacationReq::all()->sortByDesc('id');
         return view('home', compact('vacatedUsers', 'absentUsers', 'upcomingAids', 'lateUsers',
-            'all_dept','attendance_ratio','my_user','all_users','vac_reqs'));
+            'all_dept','attendance_ratio','my_user','all_users','vac_reqs','employeeCount'));
     }
 }
