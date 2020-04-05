@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
     <h3 class="page-title">
 
     </h3>
@@ -31,7 +29,7 @@ $status = \App\Model\Comleaving::where('user' , auth()->user()->id)->orderBy('cr
                               </small>
                             </div>
                             <hr>
-                            @if($status == null)
+                            <?php if($status == null): ?>
                             <div class="col-lg-6 form-group">
                               <center>
                                 <button type="submit" class="btn hos-info" style="width:100%;font-size:24px;" id="staff_coming">
@@ -40,8 +38,8 @@ $status = \App\Model\Comleaving::where('user' , auth()->user()->id)->orderBy('cr
                                 </button>
                               </center>
                             </div>
-                            @else
-                            @if($status->status == 'coming')
+                            <?php else: ?>
+                            <?php if($status->status == 'coming'): ?>
                             <div class="col-lg-6 form-group">
                               <center>
                                 <button type="submit" class="btn hos-info" style="width:100%;font-size:24px;" id="staff_coming">
@@ -50,7 +48,8 @@ $status = \App\Model\Comleaving::where('user' , auth()->user()->id)->orderBy('cr
                                 </button>
                               </center>
                             </div>
-                            @else
+                            <?php else: ?>
+
                             <div class="col-lg-6 form-group">
                               <center>
                                 <button type="submit" class="btn hos-primary" style="width:100%;font-size:24px;" id="staff_leaving">
@@ -59,8 +58,8 @@ $status = \App\Model\Comleaving::where('user' , auth()->user()->id)->orderBy('cr
                                 </button>
                               </center>
                             </div>
-                            @endif
-                            @endif
+                            <?php endif; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -104,20 +103,20 @@ $status = \App\Model\Comleaving::where('user' , auth()->user()->id)->orderBy('cr
 
 
 
-@stop
+<?php $__env->stopSection(); ?>
 
-@section('javascript')
-    @parent
+<?php $__env->startSection('javascript'); ?>
+    ##parent-placeholder-b6e13ad53d8ec41b034c49f131c64e99cf25207a##
     <script type="text/javascript">
     function showPosition(){if(navigator.geolocation){navigator.geolocation.getCurrentPosition(function(position){ $('#lat').val(position.coords.latitude);$('#lng').val(position.coords.longitude);});}}
     $('document').ready(function(){
       showPosition();
-      $.ajaxSetup({headers: {'X-CSRF-TOKEN': "{{csrf_token()}}" }});
+      $.ajaxSetup({headers: {'X-CSRF-TOKEN': "<?php echo e(csrf_token()); ?>" }});
       $(document).on("click", "#staff_leaving", function()
       {
         $('#loading').modal('show');
         jQuery.get({
-      						 url: "{{url('admin/ajax/leaving')}}",
+      						 url: "<?php echo e(url('admin/ajax/leaving')); ?>",
       						 method: 'get',
       						 data:{lat:$('#lat').val(),lng:$('#lng').val(),code:$('#code').val()},
       						 success: function(data)
@@ -139,7 +138,7 @@ $status = \App\Model\Comleaving::where('user' , auth()->user()->id)->orderBy('cr
     {
       $('#loading').modal('show');
       jQuery.get({
-                 url: "{{url('admin/ajax/coming')}}",
+                 url: "<?php echo e(url('admin/ajax/coming')); ?>",
                  method: 'get',
                  data:{lat:$('#lat').val(),lng:$('#lng').val(),code:$('#code').val()},
                  success: function(data)
@@ -159,4 +158,6 @@ $status = \App\Model\Comleaving::where('user' , auth()->user()->id)->orderBy('cr
 
     });
 </script>
-@stop
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\eskanh\eskan\resources\views/admin/users/leaving_coming.blade.php ENDPATH**/ ?>

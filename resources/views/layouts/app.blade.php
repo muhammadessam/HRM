@@ -159,7 +159,6 @@
                     @endif
 
                     @yield('content')
-                    @routes
                 </div>
             </div>
         </section>

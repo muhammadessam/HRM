@@ -59,22 +59,157 @@
     .float-left {
         float: left !important;
     }
+    .list-group-item{
+        width: 20%;
+        margin: 8px;
+        height: 50px;
+    }
+    .list-group-item form{
+        width: fit-content;
+        float: left;
+    }
+   .emp_section{
+       width: 90%;
+       margin: 0 auto;
+       padding: 1%;
+       font-family: adobe-arabic;
+       font-size: 15px;
+       font-weight: 600;
+       letter-spacing: 1.3px;
+       color: #4c4c4c;
+   }
+    .emp_section h3{
+        margin: 20px 0 20px 20px;
+        font-family: adobe-arabic;
+        font-size: 30px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+    }
+   .emp_table{
+       width: 60%;
+       margin: 0 auto;
+       background-color: #235e80;
+       color: white;
+       border: 2px solid black;
+   }
+    .work_table{
+        max-height: 500px;
+        overflow-y: auto;
+        width: 60%;
+        margin: 0 auto;
+    }
     </style>
+   @if(auth()->user()->hasRole(4))
+       <div class="emp_section">
+           <h3>{{$my_user->name}}</h3>
+           <h5>الاقسام</h5>
+           <ul class="list-group">
+               @foreach($my_user->departments as $dep)
+                   <li class="list-group-item">{{$dep->name}}</li>
+               @endforeach
+           </ul>
+           <h5> طلبات الاجازة </h5>
+           <table class="table emp_table">
+               <thead class="thead-dark">
+               <tr>
+                   <th scope="col">نوع الاجازة</th>
+                   <th scope="col">الحالة</th>
+               </tr>
+               </thead>
+               <tbody>
+               @foreach($my_user->vacationRequests as $item)
+                   <tr>
+                       <td>{{\App\Vacation::find($item->vac_id)->name}}</td>
+                       <td>{{$item->status}}</td>
+                   </tr>
+               @endforeach
+               </tbody>
+           </table>
+           <h5>الاجازات</h5>
+           <ul class="list-group">
+               @foreach($my_user->deservedVacations as $item)
+                   <li class="list-group-item">
+                       {{$item->name}}
+                       <form method="post" action="./vacation/request">
+                           @csrf
+                           <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
+                           <input type="hidden" name="vac_id" value="{{$item->pivot->vacation_id}}">
+                           <button type="submit" class="btn btn-success">طلب اجازة</button>
+                       </form>
+                   </li>
+               @endforeach
+           </ul>
+           <h5>الاجازات المستخدمة</h5>
+           <ul class="list-group">
+               @foreach($my_user->usedVacations as $item)
+                   <li class="list-group-item">{{$item->vacation->name}}</li>
+               @endforeach
+           </ul>
+           <h5>فترات العمل</h5>
+           <ul class="list-group">
+               @foreach($my_user->workingPeriods as $item)
+                   <li class="list-group-item">{{$item->name}}</li>
+               @endforeach
+           </ul>
+           <h5> ايام الراحة</h5>
+           <ul class="list-group">
+               @foreach($my_user->restDays as $item)
+                   <li class="list-group-item">{{$item->getDayNameAttribute()}}</li>
+               @endforeach
+           </ul>
+           <h5> ايام العمل </h5>
+           <div class="work_table">
+               <table class="table emp_table" style="width: 100%;">
+                   <thead>
+                   <tr>
+                       <th scope="col">التاريخ</th>
+                       <th scope="col">الحضور</th>
+                       <th scope="col">الانصراف</th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                   @foreach($my_user->pointings as $item)
+                       <tr>
+                           <td>{{$item->day}}</td>
+                           <td>{{$item->supposed_in}}</td>
+                           <td>{{$item->supposed_out}}</td>
+                       </tr>
+                   @endforeach
+                   </tbody>
+               </table>
+           </div>
+
+       </div>
+   @endif
+    @if(auth()->user()->hasRole(1))
     <div class="row">
-        <div class="col-lg-4">
-        <div class="card gradient-1">
-                                <div class="card-body">
-                                    <h3 class="card-title text-white">الموظفين</h3>
-                                    <div class="d-inline-block">
-                                        <h2 class="text-white">{{$absentUsers->count()}}</h2>
-                                    </div>
-                                    <span class="float-left display-5 opacity-5">
-                                    <i class="fa fa-users" aria-hidden="true"></i>
-                                    </span>
-                                </div>
+        <div class="col-lg-3">
+            <div class="card gradient-1">
+                <div class="card-body">
+                    <h3 class="card-title text-white">الموظفين</h3>
+                    <div class="d-inline-block">
+                        <h2 class="text-white">{{$all_users->count()}}</h2>
+                    </div>
+                    <span class="float-left display-5 opacity-5">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    </span>
+                </div>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
+            <div class="card gradient-1">
+                <div class="card-body">
+                    <h3 class="card-title text-white">الموظفين الحاضريين</h3>
+                    <div class="d-inline-block">
+                        <h2 class="text-white">{{$absentUsers->count()}}</h2>
+                    </div>
+                    <span class="float-left display-5 opacity-5">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
         <div class="card gradient-1">
                                 <div class="card-body">
                                     <h3 class="card-title text-white">الموظفين المجازين</h3>
@@ -87,21 +222,57 @@
                                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
         <div class="card gradient-1">
-                                <div class="card-body">
-                                    <h3 class="card-title text-white">الغياب اليومي</h3>
-                                    <div class="d-inline-block">
-                                        <h2 class="text-white">{{$attendance_ratio}}%</h2>
-                                    </div>
-                                    <span class="float-left display-5 opacity-5">
-                                        <i class="fa fa-building" aria-hidden="true"></i>
-                                    </span>
-                                </div>
+                <div class="card-body">
+                    <h3 class="card-title text-white">الغياب اليومي</h3>
+                    <div class="d-inline-block">
+                        <h2 class="text-white">{{$attendance_ratio}}%</h2>
+                    </div>
+                    <span class="float-left display-5 opacity-5">
+                        <i class="fa fa-building" aria-hidden="true"></i>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
-
+    <div class="vaction-reqs">
+        <h3>طلبات الاجازة</h3>
+        <table class="table">
+            <thead>
+                <th class="col">اسم الموظف</th>
+                <th class="col">نوع الاجازو </th>
+                <th class="col">الاستجابة</th>
+            </thead>
+            <tbody>
+                @foreach($vac_reqs as $vac)
+                    @if($vac->status == "pending")
+                    <tr>
+                        <td>{{$vac->user->name}}</td>
+                        <td>{{$vac->vacation->name}}</td>
+                        <td>
+                            <form method="post" action="{{route('admin.accept_vac_request')}}">
+                                @csrf
+                                <input type="hidden" name="user_id" value="{{$vac->user_id}}">
+                                <input type="hidden" name="vac_id" value="{{$vac->vac_id}}">
+                                <input type="hidden" name="id" value="{{$vac->id}}">
+                                <button type="submit" class="btn btn-success">قبول</button>
+                            </form>
+                            <form method="post" action="{{route('admin.refuse_vac_request')}}">
+                                @csrf
+                                <input type="hidden" name="user_id" value="{{$vac->user_id}}">
+                                <input type="hidden" name="vac_id" value="{{$vac->vac_id}}">
+                                <input type="hidden" name="id" value="{{$vac->id}}">
+                                <button type="submit" class="btn btn-warning">رفض</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endif
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    @endif
     <div class="row">
         @can("dashboard_absent_users")
             <div class="col-md-12">

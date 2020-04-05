@@ -530,7 +530,7 @@ class User extends Authenticatable
 
         return User::latest()->get();
     }
-
+// user vars /////////////////////////////////////////////////////////////////////////////
     public function degree()
     {
         return $this->belongsTo(Degree::class);
@@ -616,6 +616,10 @@ class User extends Authenticatable
     public function leavingComing()
     {
         return $this->hasMany(LeavingComing::class, 'user', 'id');
+    }
+
+    public function  vacationRequests(){
+        return $this->hasMany('App\VacationReq','user_id','id');
     }
 
 }

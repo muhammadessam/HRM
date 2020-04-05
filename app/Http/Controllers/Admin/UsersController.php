@@ -10,9 +10,11 @@ use App\Http\Requests\Admin\StoreUsersRequest;
 use App\Http\Requests\Admin\UpdateUsersRequest;
 use App\LeavingComing;
 use App\Specialty;
+use App\UsedVacation;
 use App\User;
 use App\Model\Comleaving;
 use App\Vacation;
+use App\VacationReq;
 use DateTime;
 use Exception;
 use GeniusTS\HijriDate\Hijri;
@@ -21,6 +23,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Redirect;
+use MongoDB\BSON\Timestamp;
 use Spatie\Permission\Models\Role;
 use GeniusTS\HijriDate\Date as HijriDate;
 
@@ -358,6 +362,31 @@ class UsersController extends Controller
         });
 
         $this->storeAttachments($request, $user);
+    }
+    public function makeRequest(Request $req)
+    {
+        $vac = new VacationReq();
+        $vac->user_id = $req->user_id;
+        $vac->vac_id = $req->vac_id;
+        $vac->save();
+        return Redirect::back();
+    }
+    public function  acceptReq(Request $req){
+        VacationReq::find($req->id)->update([
+            'status' => 'accepted',
+        ]);
+        $used = new UsedVacation();
+        $used->user_id = $req->user_id;
+        $used->vacation_id = $req->vac_id;
+        $used->starts_at = date('Y-m-d');
+        $used->save();
+        return Redirect::back();
+    }
+    public function  refuseReq(Request $req){
+        VacationReq::find($req->id)->update([
+            'status' => 'refused',
+        ]);
+        return Redirect::back();
     }
 
 }
