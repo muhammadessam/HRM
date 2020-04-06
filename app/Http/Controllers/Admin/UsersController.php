@@ -95,7 +95,7 @@ class UsersController extends Controller
 
         $this->authorize('create', User::class);
 
-        $roles = Role::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '0');
+        $roles = Role::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '4');
         $degrees = Degree::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '0');
         $departments = Department::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '0');
         $specialties = Specialty::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '0');
@@ -375,12 +375,8 @@ class UsersController extends Controller
         VacationReq::find($req->id)->update([
             'status' => 'accepted',
         ]);
-        $used = new UsedVacation();
-        $used->user_id = $req->user_id;
-        $used->vacation_id = $req->vac_id;
-        $used->starts_at = date('Y-m-d');
-        $used->save();
-        return Redirect::back();
+        $id = $req->user_id;
+        return Redirect::route('admin.users.usedVacations.create',$id);
     }
     public function  refuseReq(Request $req){
         VacationReq::find($req->id)->update([

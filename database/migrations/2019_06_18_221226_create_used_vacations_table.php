@@ -21,10 +21,10 @@ class CreateUsedVacationsTable extends Migration
             $table->string('note')->nullable();
 
             $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->unsignedInteger('vacation_id');
-            $table->foreign('vacation_id')->references('id')->on('vacations');
+            $table->foreign('vacation_id')->references('id')->on('vacations')->onDelete('cascade');
 
             $table->index(['deleted_at']);
             $table->timestamps();

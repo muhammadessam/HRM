@@ -43,10 +43,10 @@ class HomeController extends Controller
         }
 
         $all_dept = DB::table('department_user')->where('user_id',$id->id)->pluck('department_id')->toArray();
-        $attendance_ratio =($presents->count() > 0)? (( $absentUsers->count() / $presents->count())*100):0;
+        $attendance_ratio =($presents->count() > 0)? (( $absentUsers->count() / $presents->count())*100):100;
         $my_user = new UserResource(User::find(Auth::user()->id));
         $vac_reqs = VacationReq::all()->sortByDesc('id');
         return view('home', compact('vacatedUsers', 'absentUsers', 'upcomingAids', 'lateUsers',
-            'all_dept','attendance_ratio','my_user','all_users','vac_reqs','employeeCount'));
+            'all_dept','attendance_ratio','my_user','all_users','vac_reqs','employeeCount','presents'));
     }
 }

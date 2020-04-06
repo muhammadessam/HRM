@@ -123,8 +123,9 @@
                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                </tbody>
            </table>
-           <h5>الاجازات</h5>
+           <h5>الاجازات المتاحة</h5>
            <ul class="list-group">
+               <?php $cc = 0 ?>
                <?php $__currentLoopData = $my_user->deservedVacations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                    <li class="list-group-item">
                        <?php echo e($item->name); ?>
@@ -183,22 +184,22 @@
     <?php if(auth()->user()->hasRole(1)): ?>
     <div class="row">
         <div class="col-lg-3">
-            <div class="card gradient-1">
-                <div class="card-body">
-                    <h3 class="card-title text-white">الموظفين</h3>
-                    <div class="d-inline-block">
-                        <h2 class="text-white"><?php echo e($all_users->count()); ?></h2>
-                    </div>
-                    <span class="float-left display-5 opacity-5">
-                    <i class="fa fa-users" aria-hidden="true"></i>
-                    </span>
+        <div class="card gradient-1">
+            <div class="card-body">
+                <h3 class="card-title text-white">الموظفين</h3>
+                <div class="d-inline-block">
+                    <h2 class="text-white"><?php echo e($employeeCount); ?></h2>
                 </div>
+                <span class="float-left display-5 opacity-5">
+                <i class="fa fa-users" aria-hidden="true"></i>
+                </span>
             </div>
+        </div>
         </div>
         <div class="col-lg-3">
             <div class="card gradient-1">
                 <div class="card-body">
-                    <h3 class="card-title text-white">الموظفين الحاضريين</h3>
+                    <h3 class="card-title text-white">الموظفين الغائبين</h3>
                     <div class="d-inline-block">
                         <h2 class="text-white"><?php echo e($absentUsers->count()); ?></h2>
                     </div>
@@ -209,16 +210,16 @@
             </div>
         </div>
         <div class="col-lg-3">
-        <div class="card gradient-1">
-                                <div class="card-body">
-                                    <h3 class="card-title text-white">الموظفين المجازين</h3>
-                                    <div class="d-inline-block">
-                                    <h2 class="text-white"><?php echo e($vacatedUsers->count()); ?></h2>
-                                    </div>
-                                    <span class="float-left display-5 opacity-5">
-                                    <i class="fa fa-user-times" aria-hidden="true"></i>
-                                    </span>
-                                </div>
+            <div class="card gradient-1">
+                <div class="card-body">
+                    <h3 class="card-title text-white">الموظفين المجازين</h3>
+                    <div class="d-inline-block">
+                    <h2 class="text-white"><?php echo e($vacatedUsers->count()); ?></h2>
+                    </div>
+                    <span class="float-left display-5 opacity-5">
+                    <i class="fa fa-user-times" aria-hidden="true"></i>
+                    </span>
+                </div>
             </div>
         </div>
         <div class="col-lg-3">
@@ -354,8 +355,7 @@
                             <?php $__currentLoopData = $lateUsers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pointing): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 
                                 <?php if( auth()->user()->hasRole(1)): ?>
-
-                                    <tr data-entry-id="<?php echo e($pointing->id); ?>">
+                                <tr data-entry-id="<?php echo e($pointing->id); ?>">
                                     <td field-key='day'><?php echo e($pointing->user->name); ?> <?php echo e($pointing->user->department->id); ?></td>
                                     <td field-key='department'><?php echo e($pointing->user->department ? $pointing->user->department->name : ''); ?></td>
                                     <td field-key='supposed_in'><?php echo e($pointing->supposed_in); ?></td>

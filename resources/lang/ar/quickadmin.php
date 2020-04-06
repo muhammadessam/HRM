@@ -40,7 +40,7 @@ return [
 	],
 
 	'roles' => [
-		'title' => 'الأدوار',
+		'title' => 'الصلاحيات',
 		'fields' => [
 			'title' => 'العنوان',
 		],
@@ -168,7 +168,7 @@ return [
 			'name' => 'الإسم',
 			'email' => 'البريد',
 			'password' => 'كلمة السر',
-			'role' => 'الدور',
+			'role' => 'المستوي',
 			'matriculate' => 'الرقم الوظيفي',
 			'identity-number' => 'رقم الهوية',
 			'sex' => 'الجنس',
@@ -456,7 +456,7 @@ return [
 	'qa_restore' => 'إرجاع',
 	'qa_permadel' => 'حذف نهائي',
 	'qa_all' => 'الكل',
-	'qa_trash' => 'قمامة',
+	'qa_trash' => 'سلة المهملات',
 	'qa_view' => 'معاينة',
 	'qa_update' => 'تعديل',
 	'qa_list' => 'لائحة',
@@ -486,8 +486,8 @@ return [
 	'qa_administrator_can_create_other_users' => 'المدير (يمكنه إضافة المؤظفين)',
 	'qa_simple_user' => 'موظف عادي',
 	'qa_title' => 'العنوان',
-	'qa_roles' => 'الأدوار',
-	'qa_role' => 'الدور',
+	'qa_roles' => 'الصلاحيات',
+	'qa_role' => 'المستوي',
 	'qa_user_management' => 'شؤون الموظفين',
 	'qa_users' => 'الموظفون',
 	'qa_admin' => 'مدير النظام',

@@ -132,7 +132,7 @@ class Pointing extends Model
         if (!$this->in) return 0;
 
         $inLatency = Carbon::parse($this->in)->diffInMinutes($this->supposed_in, false);
-        return $inLatency < 0 ? (abs($inLatency) > $this->workingPeriod()->allowed_in_latency ? abs($inLatency) : 0) : 0;
+        return $inLatency < 0 ? (abs($inLatency) > $this->workingPeriod() ? abs($inLatency) : 0) : 0;
     }
 
     public function workingPeriod()
@@ -172,7 +172,7 @@ class Pointing extends Model
 
         $outLatency = $out->diffInMinutes($supposedOut, false);
 
-        return $outLatency < 0 ? 0 : ($outLatency > $this->workingPeriod()->allowed_out_latency ? $outLatency : 0);
+        return $outLatency < 0 ? 0 : ($outLatency > $this->workingPeriod()? $outLatency : 0);
     }
 
     public function getOutPlusAttribute()

@@ -14,7 +14,7 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <?php echo app('translator')->getFromJson('quickadmin.qa_list'); ?>
+            <?php echo app('translator')->getFromJson('quickadmin.qa_list'); ?>++++
         </div>
 
         <div class="panel-body table-responsive">

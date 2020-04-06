@@ -12,6 +12,14 @@
                     <span class="title">@lang('quickadmin.qa_dashboard')</span>
                 </a>
             </li>
+            @can('user_access')
+                <li>
+                    <a href="{{ route('admin.users.index') }}">
+                        <i class="fa fa-user"></i>
+                        <span>@lang('quickadmin.users.title')</span>
+                    </a>
+                </li>
+            @endcan
 
             @if(auth()->user()->hasPermissionTo('user_create'))
                 <li class="treeview">
@@ -58,14 +66,7 @@
                                 </a>
                             </li>@endcan
 
-                        @can('user_access')
-                            <li>
-                                <a href="{{ route('admin.users.index') }}">
-                                    <i class="fa fa-user"></i>
-                                    <span>@lang('quickadmin.users.title')</span>
-                                </a>
-                            </li>
-                        @endcan
+
 
                         @can('assign_aid_access')
                             <li>
@@ -348,39 +349,61 @@
                         </li>
                     </ul>
                 </li>
-
-
-                                <li class="treeview">
-                                    <a href="#">
-                                      <i class="fa fa-table" aria-hidden="true"></i>
-                                      <span>
-                                    مواقع العمل
-                                      </span>
-                                        <span class="pull-right-container">
-                                            <i class="fa fa-angle-left"></i>
-                                        </span>
-                                    </a>
-                                    <ul class="treeview-menu">
-                                      @if(auth()->user()->hasPermissionTo('user_create'))
-                                      <li>
-                                          <a href="{{ url('admin/position/create') }}">
-                                              <i class="fa fa-briefcase"></i>
-                                              <span>
-                                            إضافة موقع جديد
-                                              </span>
-                                          </a>
-                                      </li>
-                                      <li>
-                                          <a href="{{ url('admin/position') }}">
-                                              <i class="fa fa-briefcase"></i>
-                                              <span>
-                                          عرض كل المواقع
-                                              </span>
-                                          </a>
-                                      </li>
-                                        @endif
-                                    </ul>
-                                </li>
+                @if(auth()->user()->hasRole(1))
+                <li class="treeview">
+                    <a href="#">
+                      <i class="fa fa-table" aria-hidden="true"></i>
+                      <span>
+                    مواقع العمل
+                      </span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                      @if(auth()->user()->hasPermissionTo('user_create'))
+                      <li>
+                          <a href="{{ url('admin/position/create') }}">
+                              <i class="fa fa-briefcase"></i>
+                              <span>
+                            إضافة موقع جديد
+                              </span>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="{{ url('admin/position') }}">
+                              <i class="fa fa-briefcase"></i>
+                              <span>
+                          عرض كل المواقع
+                              </span>
+                          </a>
+                      </li>
+                        @endif
+                    </ul>
+                </li>
+                @endif
+            @if(auth()->user()->hasRole(4))
+            <li>
+                <a href="#">
+                    <i class="far fa-paper-plane"></i>
+                    اتصل بنا</a>
+            </li>
+            <li>
+                <a href="#">
+                     التعاميم
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                     الرواتب والمسيرات
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                     الانذارات
+                </a>
+            </li>
+            @endif
             <li>
                 <a href="#logout" onclick="$('#logout').submit();">
                     <i class="fa fa-arrow-left"></i>

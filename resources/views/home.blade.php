@@ -125,8 +125,9 @@
                @endforeach
                </tbody>
            </table>
-           <h5>الاجازات</h5>
+           <h5>الاجازات المتاحة</h5>
            <ul class="list-group">
+               <?php $cc = 0 ?>
                @foreach($my_user->deservedVacations as $item)
                    <li class="list-group-item">
                        {{$item->name}}
@@ -199,7 +200,7 @@
         <div class="col-lg-3">
             <div class="card gradient-1">
                 <div class="card-body">
-                    <h3 class="card-title text-white">الموظفين الحاضريين</h3>
+                    <h3 class="card-title text-white">الموظفين الغائبين</h3>
                     <div class="d-inline-block">
                         <h2 class="text-white">{{$absentUsers->count()}}</h2>
                     </div>
@@ -210,16 +211,16 @@
             </div>
         </div>
         <div class="col-lg-3">
-        <div class="card gradient-1">
-                                <div class="card-body">
-                                    <h3 class="card-title text-white">الموظفين المجازين</h3>
-                                    <div class="d-inline-block">
-                                    <h2 class="text-white">{{$vacatedUsers->count()}}</h2>
-                                    </div>
-                                    <span class="float-left display-5 opacity-5">
-                                    <i class="fa fa-user-times" aria-hidden="true"></i>
-                                    </span>
-                                </div>
+            <div class="card gradient-1">
+                <div class="card-body">
+                    <h3 class="card-title text-white">الموظفين المجازين</h3>
+                    <div class="d-inline-block">
+                    <h2 class="text-white">{{$vacatedUsers->count()}}</h2>
+                    </div>
+                    <span class="float-left display-5 opacity-5">
+                    <i class="fa fa-user-times" aria-hidden="true"></i>
+                    </span>
+                </div>
             </div>
         </div>
         <div class="col-lg-3">
@@ -361,8 +362,7 @@
                                     return $user->id === $pointing->user->id;
                                 })) --}}
                                 @if( auth()->user()->hasRole(1))
-
-                                    <tr data-entry-id="{{ $pointing->id }}">
+                                <tr data-entry-id="{{ $pointing->id }}">
                                     <td field-key='day'>{{ $pointing->user->name }} {{$pointing->user->department->id}}</td>
                                     <td field-key='department'>{{ $pointing->user->department ? $pointing->user->department->name : '' }}</td>
                                     <td field-key='supposed_in'>{{ $pointing->supposed_in }}</td>

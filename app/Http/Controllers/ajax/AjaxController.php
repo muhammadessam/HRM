@@ -80,7 +80,7 @@ public function store($p , $user)
         'user_id' => $user->id,
         'day' => $day,
         'supposed_in' => $supposedIn,
-        'in' => $request->in,
+        'in' => date('H:m'),
         'supposed_out' => $supposedOut,
         'out' => NULL,
         'admin_id' => NULL,
@@ -96,7 +96,7 @@ public function store($p , $user)
     $data = Array();
     $data[0] = 0;
     $data[1] = 'المعلومات التي ادخلت غير صحيحة أو مكان عملك نفسه المسجل لدينا';
-    if($r->input('lat') && $r->input('lng') && $r->input('time') && $r->input('code'))
+    if($r->input('code'))
     {
       $user  = User::where('code' , $r->input('code'))->first();
       if($user != null)
@@ -149,12 +149,10 @@ public function store($p , $user)
 
   public function coming(Request $r)
   {
-
     $data = Array();
     $data[0] = 0;
     $data[1] = 'المعلومات التي ادخلت غير صحيحة أو مكان عملك نفسه المسجل لدينا';
-
-    if($r->input('lat') && $r->input('lng') && $r->input('time') && $r->input('code'))
+    if($r->input('code'))
     {
       $user  = User::where('code' , $r->input('code'))->first();
       if($user != null)

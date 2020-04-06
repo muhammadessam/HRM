@@ -16,8 +16,8 @@ class Aid extends Model
     public static function upcomingIn(int $days): Builder
     {
         return Aid::whereBetween('starts_at', [
-            now()->addDay()->toDateString(),
-            now()->addDays($days + 1)->toDateString()
+            now()->addDay(-1)->toDateString(),
+            now()->addDays($days + 2)->toDateString()
         ]);
     }
 }

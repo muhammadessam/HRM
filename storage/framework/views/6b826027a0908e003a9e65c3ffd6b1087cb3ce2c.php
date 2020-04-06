@@ -32,6 +32,7 @@
       href="<?php echo e(url('quickadmin/css')); ?>/select2.min.css"/>
 <link href="<?php echo e(url('adminlte/css/AdminLTE.min.css')); ?>" rel="stylesheet">
 <link href="<?php echo e(url('adminlte/css/custom.css')); ?>" rel="stylesheet">
+<link href="<?php echo e(url('css/custome.css')); ?>" rel="stylesheet">
 <link href="<?php echo e(url('adminlte/css/skins/skin-blue.min.css')); ?>" rel="stylesheet">
 <link rel="stylesheet"
       href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">

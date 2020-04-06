@@ -12,7 +12,6 @@ $status = \App\Model\Comleaving::where('user' , auth()->user()->id)->orderBy('cr
         <div class="panel-heading hos-info" style="font-size:20px;color:#000;">
             الحضور و الانصراف
         </div>
-
         <div class="panel-body">
             <div class="nav-tabs-custom">
 
@@ -26,6 +25,7 @@ $status = \App\Model\Comleaving::where('user' , auth()->user()->id)->orderBy('cr
                               <input type="text" class="form-control" id="code" value="">
                               <input type="hidden" value="0" id="lng">
                               <input type="hidden" value="0" id="lat">
+                              <input type="hidden" value="{{time()}}" id="time">
                               <small class="form-text text-muted">
                                 قم بمسح الباركود المرسل اليك من طرف الادارة
                               </small>
@@ -41,7 +41,7 @@ $status = \App\Model\Comleaving::where('user' , auth()->user()->id)->orderBy('cr
                               </center>
                             </div>
                             @else
-                            @if($status->status == 'coming')
+                            @if(!$status->status == 'c')
                             <div class="col-lg-6 form-group">
                               <center>
                                 <button type="submit" class="btn hos-info" style="width:100%;font-size:24px;" id="staff_coming">
@@ -116,45 +116,51 @@ $status = \App\Model\Comleaving::where('user' , auth()->user()->id)->orderBy('cr
       $(document).on("click", "#staff_leaving", function()
       {
         $('#loading').modal('show');
-        jQuery.get({
-      						 url: "{{url('admin/ajax/leaving')}}",
-      						 method: 'get',
-      						 data:{lat:$('#lat').val(),lng:$('#lng').val(),code:$('#code').val()},
-      						 success: function(data)
-      						 {
-                     $('#loading').modal('toggle');
-                     if(data[0] == 1)
-                     {
-                       bootoast.toast({message: data[1],type: 'success',position: 'top',animationDuration: 1000,dismissible: true});
-                     }
-                     else
-                     {
-                      bootoast.toast({message: data[1],type: 'danger',position: 'top',animationDuration: 1000,dismissible: true});
-                     }
-      						 }
-      				});
+        jQuery.get("{{url('admin/ajax/leaving')}}",
+            {
+                lat:$('#lat').val(),
+                lng:$('#lng').val(),
+                time:$('#time').val(),
+                code:$('#code').val()
+            },
+             function(data)
+             {
+                 $('#loading').modal('toggle');
+                 if(data[0] == 1)
+                 {
+                   bootoast.toast({message: data[1],type: 'success',position: 'top',animationDuration: 1000,dismissible: true});
+                 }
+                 else
+                 {
+                  bootoast.toast({message: data[1],type: 'danger',position: 'top',animationDuration: 1000,dismissible: true});
+                 }
+             }
+        );
     });
 
     $(document).on("click", "#staff_coming", function()
     {
       $('#loading').modal('show');
-      jQuery.get({
-                 url: "{{url('admin/ajax/coming')}}",
-                 method: 'get',
-                 data:{lat:$('#lat').val(),lng:$('#lng').val(),code:$('#code').val()},
-                 success: function(data)
+      jQuery.get("{{url('admin/ajax/coming')}}",
+          {
+              lat:$('#lat').val(),
+              lng:$('#lng').val(),
+              time:$('#time').val(),
+              code:$('#code').val()
+          },
+          function(data)
+             {
+                 $('#loading').modal('toggle');
+                 if(data[0] == 1)
                  {
-                     $('#loading').modal('toggle');
-                     if(data[0] == 1)
-                     {
-                       bootoast.toast({message: data[1],type: 'success',position: 'top',animationDuration: 1000,dismissible: true});
-                     }
-                     else
-                     {
-                      bootoast.toast({message: data[1],type: 'danger',position: 'top',animationDuration: 1000,dismissible: true});
-                     }
+                   bootoast.toast({message: data[1],type: 'success',position: 'top',animationDuration: 1000,dismissible: true});
                  }
-            });
+                 else
+                 {
+                  bootoast.toast({message: data[1],type: 'danger',position: 'top',animationDuration: 1000,dismissible: true});
+                 }
+             }
+      );
   });
 
     });
