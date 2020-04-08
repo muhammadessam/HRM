@@ -584,7 +584,7 @@ class User extends Authenticatable
 
     public function workingPeriods()
     {
-        return $this->belongsToMany(WorkingPeriod::class);
+        return $this->belongsToMany(WorkingPeriod::class,'user_working_period','user_id','working_period_id');
     }
 
 //    public function departmentWorkingPeriods()

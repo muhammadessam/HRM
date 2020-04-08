@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Storage;
 use Response;
+use App\Pointing;
 use PDF;
 use App\User;
 use App\WorkingPeriod;
@@ -45,7 +46,7 @@ class AjaxController extends Controller
 
     foreach($periods as $p)
     {
-      if($time < $this->getScondTime($p->finishes_at_time) && $time > $this->getScondTime($p->starts_at_time))
+      if($time < $p->finishes_at_time && $time > $p->starts_at_time)
       {
         return $p->id;
       }
@@ -80,7 +81,7 @@ public function store($p , $user)
         'user_id' => $user->id,
         'day' => $day,
         'supposed_in' => $supposedIn,
-        'in' => date('H:m'),
+        'in' => date('H:m',time()+7000),
         'supposed_out' => $supposedOut,
         'out' => NULL,
         'admin_id' => NULL,
@@ -92,7 +93,6 @@ public function store($p , $user)
 
   public function leaving(Request $r)
   {
-
     $data = Array();
     $data[0] = 0;
     $data[1] = 'المعلومات التي ادخلت غير صحيحة أو مكان عملك نفسه المسجل لدينا';
@@ -103,6 +103,7 @@ public function store($p , $user)
       {
 
           $status = Comleaving::where('user' , $user->id)->orderBy('id', 'desc')->first();
+
           if($status != null)
           {
 
@@ -114,6 +115,11 @@ public function store($p , $user)
             else
             {
               $p = $this->getperiod($r->input('time'));
+              $period = WorkingPeriod::find($p);
+              $pointing = Pointing::all()
+                    ->where('user_id',auth()->user()->id)
+                    ->where('supposed_out',$period->finishes_at_time)
+                    ->where('day',date('Y-m-d',time()))->last();
               if($p == -1)
               {
                 $status->status = 'l';
@@ -122,13 +128,15 @@ public function store($p , $user)
                 $data[1] = 'الفترة التي تم اختيارها لا تتناسب مع فترات الموظف';
               }else
               {
-                if($r->input('time') < $this->getScondTime($status->when_no_out_time))
+                if(strtotime($r->input('time')) - strtotime('TODAY') < $this->getScondTime($period->when_no_out_time))
                 {
                   $data[0] = 0;
                   $data[1] = 'الفترة التي تم اختيارها  لا يحق لك تسجسل الخروج فيها';
                 }
                 else
                 {
+                $pointing->out =  $r->input("time");
+                $pointing->save();
                   $status->status = 'l';
                   $status->save();
                   $data[0] = 1;
@@ -149,6 +157,7 @@ public function store($p , $user)
 
   public function coming(Request $r)
   {
+
     $data = Array();
     $data[0] = 0;
     $data[1] = 'المعلومات التي ادخلت غير صحيحة أو مكان عملك نفسه المسجل لدينا';
@@ -168,55 +177,87 @@ public function store($p , $user)
           else
           {
             $p = $this->getperiod($r->input('time'));
+              $period = WorkingPeriod::find($p);
             if($p == -1)
             {
               $data[0] = 0;
-              $data[1] = 'الفترة التي تم اختيارها لا تتناسب مع فترات الموظف';
+              $data[1] = 'الفترة التي تم اختيارهاغير موجودة';
             }else
             {
 
-              if($r->input('time') < $this->getScondTime($status->when_no_in_time))
+              if(strtotime($r->input('time')) - strtotime('TODAY')  < $this->getScondTime($period->when_no_in_time))
               {
                 $data[0] = 0;
                 $data[1] = 'الفترة التي تم اختيارها لا تتناسب مع فترات الموظف';
               }
               else
               {
-                $this->store($p , $user);
-                $newstatus = new Comleaving();
-                $newstatus->user = $user->id;
-                $newstatus->status = 'c';
-                $newstatus->save();
-                $data[0] = 1;
-                $data[1] = 'تم تسجيل حضورك بنجاح';
+                $pointing = Pointing::all()
+                  ->where('user_id',auth()->user()->id)
+                  ->where('supposed_out',$period->starts_at_time)
+                  ->where('day',date('Y-m-d',time()))->last();
+                if ($pointing){
+                    $pointing->in =  $r->input("time");
+                    $pointing->save();
+                    $newstatus = new Comleaving();
+                    $newstatus->user = $user->id;
+                    $newstatus->status = 'c';
+                    $data[0] = 1;
+                    $data[1] = 'تم تسجيل حضورك بنجاح';
+                }
+                else{
+                    $this->store($p , $user);
+                    $newstatus = new Comleaving();
+                    $newstatus->user = $user->id;
+                    $newstatus->status = 'c';
+                    $newstatus->save();
+                    $data[0] = 1;
+                    $data[1] = 'تم تسجيل حضورك بنجاح';
+                }
               }
+            }
           }
-          }
-
         }
         else
         {
           $p = $this->getperiod($r->input('time'));
+            $period = WorkingPeriod::find($p);
           if($p == -1)
           {
+
             $data[0] = 0;
-            $data[1] = 'الفترة التي تم اختيارها لا تتناسب مع فترات الموظف';
+            $data[1] = 'الفترة التي تم اختيارهاغير موجودة لدي الموظف';
           }else
           {
-            if($r->input('time') < $this->getScondTime($status->when_no_in_time))
+            if($r->input('time') < $this->getScondTime($period->when_no_in_time))
             {
               $data[0] = 0;
-              $data[1] = 'الفترة التي تم اختيارها لا تتناسب مع فترات الموظف';
+              $data[1] = 'قد تجاوزت الفترة المسموحة لتسجيل الدخول';
             }
             else
             {
-              $this->store($p , $user);
-              $newstatus = new Comleaving();
-              $newstatus->user = $user->id;
-              $newstatus->status = 'c';
-              $newstatus->save();
-              $data[0] = 1;
-              $data[1] = 'تم تسجيل حضورك بنجاح';
+                $pointing = Pointing::all()
+                    ->where('user_id',auth()->user()->id)
+                    ->where('supposed_out',$period->starts_at_time)
+                    ->where('day',date('Y-m-d',time()))->last();
+                if ($pointing){
+                    $pointing->in =  $r->input("time");
+                    $pointing->save();
+                    $newstatus = new Comleaving();
+                    $newstatus->user = $user->id;
+                    $newstatus->status = 'c';
+                    $data[0] = 1;
+                    $data[1] = 'تم تسجيل حضورك بنجاح';
+                }
+                else{
+                    $this->store($p , $user);
+                    $newstatus = new Comleaving();
+                    $newstatus->user = $user->id;
+                    $newstatus->status = 'c';
+                    $newstatus->save();
+                    $data[0] = 1;
+                    $data[1] = 'تم تسجيل حضورك بنجاح';
+                }
             }
 
         }

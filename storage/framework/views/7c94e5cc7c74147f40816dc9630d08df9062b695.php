@@ -14,7 +14,7 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <?php echo app('translator')->getFromJson('quickadmin.qa_list'); ?>++++
+            <?php echo app('translator')->getFromJson('quickadmin.qa_list'); ?>
         </div>
 
         <div class="panel-body table-responsive">
@@ -153,8 +153,7 @@
         </div>
     </div>
 <?php $__env->stopSection(); ?>
-
-<?php $__env->startSection('javascript'); ?> 
+<?php $__env->startSection('javascript'); ?>
     <script>
         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('user_delete')): ?>
             window.route_mass_crud_entries_destroy = '<?php echo e(route('admin.users.mass_destroy')); ?>';

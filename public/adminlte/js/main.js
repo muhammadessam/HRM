@@ -70,7 +70,7 @@ $(document).ready(function () {
                 targets: 0
             });
         }
-        $(this).dataTable(window.dtDefaultOptions);
+        // $(this).dataTable(window.dtDefaultOptions);
     });
     $(document).on( 'init.dt', function ( e, settings ) {
         if (typeof window.route_mass_crud_entries_destroy != 'undefined') {

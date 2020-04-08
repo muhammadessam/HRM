@@ -23,7 +23,7 @@ $status = \App\Model\Comleaving::where('user' , auth()->user()->id)->orderBy('cr
                               <input type="text" class="form-control" id="code" value="">
                               <input type="hidden" value="0" id="lng">
                               <input type="hidden" value="0" id="lat">
-                              <input type="hidden" value="<?php echo e(time()); ?>" id="time">
+                              <input type="hidden" value="<?php echo e(date('H:m',time()+10000)); ?>" id="time">
                               <small class="form-text text-muted">
                                 قم بمسح الباركود المرسل اليك من طرف الادارة
                               </small>
@@ -39,25 +39,25 @@ $status = \App\Model\Comleaving::where('user' , auth()->user()->id)->orderBy('cr
                               </center>
                             </div>
                             <?php else: ?>
-                            <?php if(!$status->status == 'c'): ?>
-                            <div class="col-lg-6 form-group">
-                              <center>
-                                <button type="submit" class="btn hos-info" style="width:100%;font-size:24px;" id="staff_coming">
-                                  <i class="fa fa-indent" aria-hidden="true"></i>
-                                  تسجيل الحضــــور
-                                </button>
-                              </center>
-                            </div>
-                            <?php else: ?>
-                            <div class="col-lg-6 form-group">
-                              <center>
-                                <button type="submit" class="btn hos-primary" style="width:100%;font-size:24px;" id="staff_leaving">
-                                  <i class="fa fa-outdent" aria-hidden="true"></i>
-                                  تسجيل الانصـــراف
-                                </button>
-                              </center>
-                            </div>
-                            <?php endif; ?>
+                                <?php if($status->status == 'l'): ?>
+                                <div class="col-lg-6 form-group">
+                                  <center>
+                                    <button type="submit" class="btn hos-info" style="width:100%;font-size:24px;" id="staff_coming">
+                                      <i class="fa fa-indent" aria-hidden="true"></i>
+                                      تسجيل الحضــــور
+                                    </button>
+                                  </center>
+                                </div>
+                                <?php else: ?>
+                                <div class="col-lg-6 form-group">
+                                  <center>
+                                    <button type="submit" class="btn hos-primary" style="width:100%;font-size:24px;" id="staff_leaving">
+                                      <i class="fa fa-outdent" aria-hidden="true"></i>
+                                      تسجيل الانصـــراف
+                                    </button>
+                                  </center>
+                                </div>
+                                <?php endif; ?>
                             <?php endif; ?>
                         </div>
                     </div>

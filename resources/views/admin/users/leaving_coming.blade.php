@@ -25,7 +25,7 @@ $status = \App\Model\Comleaving::where('user' , auth()->user()->id)->orderBy('cr
                               <input type="text" class="form-control" id="code" value="">
                               <input type="hidden" value="0" id="lng">
                               <input type="hidden" value="0" id="lat">
-                              <input type="hidden" value="{{time()}}" id="time">
+                              <input type="hidden" value="{{date('H:m',time()+10000)}}" id="time">
                               <small class="form-text text-muted">
                                 قم بمسح الباركود المرسل اليك من طرف الادارة
                               </small>
@@ -41,25 +41,25 @@ $status = \App\Model\Comleaving::where('user' , auth()->user()->id)->orderBy('cr
                               </center>
                             </div>
                             @else
-                            @if(!$status->status == 'c')
-                            <div class="col-lg-6 form-group">
-                              <center>
-                                <button type="submit" class="btn hos-info" style="width:100%;font-size:24px;" id="staff_coming">
-                                  <i class="fa fa-indent" aria-hidden="true"></i>
-                                  تسجيل الحضــــور
-                                </button>
-                              </center>
-                            </div>
-                            @else
-                            <div class="col-lg-6 form-group">
-                              <center>
-                                <button type="submit" class="btn hos-primary" style="width:100%;font-size:24px;" id="staff_leaving">
-                                  <i class="fa fa-outdent" aria-hidden="true"></i>
-                                  تسجيل الانصـــراف
-                                </button>
-                              </center>
-                            </div>
-                            @endif
+                                @if($status->status == 'l')
+                                <div class="col-lg-6 form-group">
+                                  <center>
+                                    <button type="submit" class="btn hos-info" style="width:100%;font-size:24px;" id="staff_coming">
+                                      <i class="fa fa-indent" aria-hidden="true"></i>
+                                      تسجيل الحضــــور
+                                    </button>
+                                  </center>
+                                </div>
+                                @else
+                                <div class="col-lg-6 form-group">
+                                  <center>
+                                    <button type="submit" class="btn hos-primary" style="width:100%;font-size:24px;" id="staff_leaving">
+                                      <i class="fa fa-outdent" aria-hidden="true"></i>
+                                      تسجيل الانصـــراف
+                                    </button>
+                                  </center>
+                                </div>
+                                @endif
                             @endif
                         </div>
                     </div>

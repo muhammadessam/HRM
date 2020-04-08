@@ -23,8 +23,7 @@ class Pointing extends Model
     {
         return Pointing::query()
             ->where(function (Builder $q) {
-                $q->whereNull('in')
-                    ->whereNull('out');
+                $q->whereNull('in');
             })
             ->where('day', $day->toDateString())
             ->whereHas('user', function (Builder $q) use ($day) {
@@ -47,8 +46,7 @@ class Pointing extends Model
         return Pointing::query()
             ->where('day', $day->toDateString())
             ->where(function (Builder $q) {
-                $q->whereNotNull('in')
-                    ->whereNotNull('out');
+                $q->whereNotNull('in');
             })
             ->whereHas('user', function (Builder $q) use ($day) {
                 $q->whereDoesntHave('aids', function (Builder $qu) use ($day) {
@@ -132,7 +130,7 @@ class Pointing extends Model
         if (!$this->in) return 0;
 
         $inLatency = Carbon::parse($this->in)->diffInMinutes($this->supposed_in, false);
-        return $inLatency < 0 ? (abs($inLatency) > $this->workingPeriod() ? abs($inLatency) : 0) : 0;
+        return $inLatency < 0 ? (abs($inLatency) > $this->workingPeriod()->count ? abs($inLatency) : 0) : 0;
     }
 
     public function workingPeriod()
@@ -172,7 +170,7 @@ class Pointing extends Model
 
         $outLatency = $out->diffInMinutes($supposedOut, false);
 
-        return $outLatency < 0 ? 0 : ($outLatency > $this->workingPeriod()? $outLatency : 0);
+        return $outLatency < 0 ? 0 : ($outLatency > $this->workingPeriod()->count()? $outLatency : 0);
     }
 
     public function getOutPlusAttribute()

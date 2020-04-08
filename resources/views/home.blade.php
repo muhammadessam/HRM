@@ -128,17 +128,35 @@
            <h5>الاجازات المتاحة</h5>
            <ul class="list-group">
                <?php $cc = 0 ?>
-               @foreach($my_user->deservedVacations as $item)
-                   <li class="list-group-item">
-                       {{$item->name}}
-                       <form method="post" action="./vacation/request">
-                           @csrf
-                           <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
-                           <input type="hidden" name="vac_id" value="{{$item->pivot->vacation_id}}">
-                           <button type="submit" class="btn btn-success">طلب اجازة</button>
-                       </form>
-                   </li>
-               @endforeach
+               @if($my_user->usedVacations->count() > 0)
+                   @foreach($my_user->usedVacations as $vac)
+                       @foreach($my_user->deservedVacations as $item)
+                           @if($vac->vacation_id != $item->pivot->vacation_id)
+                           <li class="list-group-item">
+                               {{$item->name}}
+                               <form method="post" action="{{route('admin.make_vac_request')}}">
+                                   @csrf
+                                   <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
+                                   <input type="hidden" name="vac_id" value="{{$item->pivot->vacation_id}}">
+                                   <button type="submit" class="btn btn-success">طلب اجازة</button>
+                               </form>
+                           </li>
+                           @endif
+                       @endforeach
+                    @endforeach
+               @else
+                   @foreach($my_user->deservedVacations as $item)
+                       <li class="list-group-item">
+                           {{$item->name}}
+                           <form method="post" action="{{route('admin.make_vac_request')}}">
+                               @csrf
+                               <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
+                               <input type="hidden" name="vac_id" value="{{$item->pivot->vacation_id}}">
+                               <button type="submit" class="btn btn-success">طلب اجازة</button>
+                           </form>
+                       </li>
+                   @endforeach
+               @endif
            </ul>
            <h5>الاجازات المستخدمة</h5>
            <ul class="list-group">
@@ -184,7 +202,7 @@
    @endif
     @if(auth()->user()->hasRole(1))
     <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-4">
         <div class="card gradient-1">
             <div class="card-body">
                 <h3 class="card-title text-white">الموظفين</h3>
@@ -197,7 +215,7 @@
             </div>
         </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <div class="card gradient-1">
                 <div class="card-body">
                     <h3 class="card-title text-white">الموظفين الغائبين</h3>
@@ -210,7 +228,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <div class="card gradient-1">
                 <div class="card-body">
                     <h3 class="card-title text-white">الموظفين المجازين</h3>
@@ -223,12 +241,41 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
-        <div class="card gradient-1">
+
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card gradient-1">
                 <div class="card-body">
                     <h3 class="card-title text-white">الغياب اليومي</h3>
                     <div class="d-inline-block">
                         <h2 class="text-white">{{$attendance_ratio}}%</h2>
+                    </div>
+                    <span class="float-left display-5 opacity-5">
+                        <i class="fa fa-building" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card gradient-1">
+                <div class="card-body">
+                    <h3 class="card-title text-white">الموظفين الحاضرين</h3>
+                    <div class="d-inline-block">
+                        <h2 class="text-white">{{$presents->count()}}</h2>
+                    </div>
+                    <span class="float-left display-5 opacity-5">
+                        <i class="fa fa-building" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card gradient-1">
+                <div class="card-body">
+                    <h3 class="card-title text-white">الموظفون المتأخرون </h3>
+                    <div class="d-inline-block">
+                        <h2 class="text-white">{{$lateUsers->count()}}</h2>
                     </div>
                     <span class="float-left display-5 opacity-5">
                         <i class="fa fa-building" aria-hidden="true"></i>

@@ -11,51 +11,54 @@
 
         <div class="panel-body">
             <div class="nav-tabs-custom">
-              <ul class="nav nav-tabs">
-                  <li class="active" style="width:15%;">
-                    <center>
-                      <a href="#basic" data-toggle="tab"
-                         aria-expanded="true" style="font-size:20px;color:#000;">
-                         <?php echo app('translator')->getFromJson('quickadmin.users.infos.basic'); ?>
-                       </a>
-                     </center>
-                  </li>
-                  <li style="width:15%;">
-                    <center>
-                      <a href="#skills" data-toggle="tab" style="font-size:20px;color:#000;"
-                         aria-expanded="true"><?php echo app('translator')->getFromJson('quickadmin.users.infos.skills'); ?></a>
-                  </li>
-                  <li style="width:15%;">
-                    <center>
-                      <a href="#hiring" data-toggle="tab" style="font-size:20px;color:#000;"
-                         aria-expanded="true"><?php echo app('translator')->getFromJson('quickadmin.users.infos.hiring'); ?></a>
-                         </center>
-                  </li>
-                  <li style="width:15%;">
-                    <center>
-                      <a href="#contract" data-toggle="tab" style="font-size:20px;color:#000;"
-                         aria-expanded="true"><?php echo app('translator')->getFromJson('quickadmin.users.infos.contract'); ?></a>
-                         </center>
-                  </li>
-                  <li style="width:15%;">
-                    <center>
-                      <a href="#attachment" data-toggle="tab" style="font-size:20px;color:#000;"
-                         aria-expanded="true"><?php echo app('translator')->getFromJson('quickadmin.users.infos.attachments'); ?></a>
-                         </center>
-                  </li>
-                  <li style="width:15%;">
-                    <center>
-                      <a href="#position" data-toggle="tab" style="font-size:20px;color:#000;"
-                         aria-expanded="true">
-                         <i class="fa fa-map-marker" aria-hidden="true"></i>
-                         تحديد موقع العمل
-                       </a>
-                         </center>
-                  </li>
-              </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="basic">
+                        <h3>
+                            <?php echo app('translator')->getFromJson('quickadmin.users.infos.basic'); ?>
+                        </h3>
                         <div class="row">
                             <div class="col-lg-4 col-md-6 col-xs-12 form-group">
                                 <?php echo Form::label('matriculate', trans('quickadmin.users.fields.matriculate').'*', ['class' => 'control-label']); ?>
@@ -98,24 +101,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
-                                <input type="radio" name="isDate" value="h"><?php echo e(trans('quickadmin.users.fields.birth-date-h')); ?><br>
-                                <input type="radio" name="isDate" value="m"><?php echo e(trans('quickadmin.users.fields.birth-date-m')); ?><br>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-xs-12 form-group">
-                                <?php echo Form::label('birth_date_h', trans('quickadmin.users.fields.birth-date-h').'', ['class' => 'control-label']); ?>
-
-                                <?php echo Form::text('birth_date_h', old('birth_date_h'), ['class' => 'form-control', 'placeholder' => '']); ?>
-
-                                <p class="help-block"></p>
-                                <?php if($errors->has('birth_date_h')): ?>
-                                    <p class="help-block">
-                                        <?php echo e($errors->first('birth_date_h')); ?>
-
-                                    </p>
-                                <?php endif; ?>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-xs-12 form-group">
+                            <div class="col-lg-4 col-md-6 col-xs-12 form-group">
                                 <?php echo Form::label('birth_date_m', trans('quickadmin.users.fields.birth-date-m').'', ['class' => 'control-label']); ?>
 
                                 <?php echo Form::text('birth_date_m', old('birth_date_m'), ['class' => 'form-control date', 'placeholder' => '']); ?>
@@ -128,8 +114,6 @@
                                     </p>
                                 <?php endif; ?>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-lg-4 col-md-6 col-xs-12 form-group">
                                 <?php echo Form::label('sex', trans('quickadmin.users.fields.sex').'*', ['class' => 'control-label']); ?>
 
@@ -144,14 +128,14 @@
                                     <label>
                                         <?php echo Form::radio('sex', 'm', false, ['required' => '']); ?>
 
-                                        Male
+                                        ذكر
                                     </label>
                                 </div>
                                 <div>
                                     <label>
                                         <?php echo Form::radio('sex', 'f', false, ['required' => '']); ?>
 
-                                        Female
+                                        انثي
                                     </label>
                                 </div>
 
@@ -169,6 +153,8 @@
                                     </p>
                                 <?php endif; ?>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-lg-4 col-md-6 col-xs-12 form-group">
                                 <?php echo Form::label('nationality', trans('quickadmin.users.fields.nationality').'', ['class' => 'control-label']); ?>
 
@@ -182,9 +168,7 @@
                                     </p>
                                 <?php endif; ?>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-xs-12 form-group">
+                            <div class="col-lg-4 col-md-6 col-xs-12 form-group">
                                 <?php echo Form::label('address', trans('quickadmin.users.fields.address').'', ['class' => 'control-label']); ?>
 
                                 <?php echo Form::text('address', old('address'), ['class' => 'form-control', 'placeholder' => '']); ?>
@@ -197,7 +181,7 @@
                                     </p>
                                 <?php endif; ?>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-xs-12 form-group">
+                            <div class="col-lg-4 col-md-6 col-xs-12 form-group">
                                 <?php echo Form::label('phone', trans('quickadmin.users.fields.phone').'', ['class' => 'control-label']); ?>
 
                                 <?php echo Form::text('phone', old('phone'), ['class' => 'form-control', 'placeholder' => '']); ?>
@@ -252,8 +236,56 @@
                                 <?php endif; ?>
                             </div>
                         </div>
+                        <div class="row">
+                            <h4 class="col-3">
+                                ارسال الاشعارت للادارة عند
+                            </h4>
+                            <div class="notifi col-3">
+                                <label>
+                                    الحضور
+                                </label>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div class="notifi col-3">
+                                <label>
+                                    اذن الدخول
+                                </label>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div class="notifi col-3">
+                                <label>
+                                    اذن الخروج
+                                </label>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div class="notifi col-3">
+                                <label>
+                                    الانصراف
+                                </label>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+
+                        </div>
+                        <center>
+                            <a class="btn next-button" href="#skills" data-toggle="tab" >التالي</a>
+                        </center>
                     </div>
                     <div class="tab-pane" id="skills">
+                        <h3>
+                            <?php echo app('translator')->getFromJson('quickadmin.users.infos.skills'); ?>
+                        </h3>
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-xs-12 form-group">
                                 <?php echo Form::label('degree_id', trans('quickadmin.degrees.fields.title').'*', ['class' => 'control-label']); ?>
@@ -346,8 +378,15 @@
                                    class="btn btn-success pull-right add-new"><?php echo app('translator')->getFromJson('quickadmin.qa_add_new'); ?></a>
                             </div>
                         </div>
+                        <center>
+                            <a class="btn next-button" href="#hiring" data-toggle="tab" >التالي</a>
+                            <a class="btn prev-button" href="#basic" data-toggle="tab">السابق</a>
+                        </center>
                     </div>
                     <div class="tab-pane" id="hiring">
+                        <h3>
+                            <?php echo app('translator')->getFromJson('quickadmin.users.infos.hiring'); ?>
+                        </h3>
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-xs-12 form-group">
                                 <?php echo Form::label('hire_date', trans('quickadmin.users.fields.hire-date').'*', ['class' => 'control-label']); ?>
@@ -404,8 +443,15 @@
                                 <?php endif; ?>
                             </div>
                         </div>
+                        <center>
+                            <a class="btn next-button" href="#contract" data-toggle="tab"  >التالي</a>
+                            <a class="btn prev-button" href="#skills" data-toggle="tab"  >السابق</a>
+                        </center>
                     </div>
                     <div class="tab-pane" id="contract">
+                        <h3>
+                            <?php echo app('translator')->getFromJson('quickadmin.users.infos.contract'); ?>
+                        </h3>
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-xs-12 form-group">
                                 <?php echo Form::label('hire_end', trans('quickadmin.users.fields.hire-end'), ['class' => 'control-label']); ?>
@@ -434,9 +480,15 @@
                                 <?php endif; ?>
                             </div>
                         </div>
+                        <center>
+                            <a class="btn next-button" href="#attachment" data-toggle="tab" >التالي</a>
+                            <a class="btn prev-button" href="#hiring" data-toggle="tab"  >السابق</a>
+                        </center>
                     </div>
                     <div class="tab-pane" id="attachment">
-
+                        <h3>
+                            <?php echo app('translator')->getFromJson('quickadmin.users.infos.attachments'); ?>
+                        </h3>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <?php echo app('translator')->getFromJson('quickadmin.attachments.title'); ?>
@@ -460,30 +512,41 @@
                                    class="btn btn-success pull-right add-new"><?php echo app('translator')->getFromJson('quickadmin.qa_add_new'); ?></a>
                             </div>
                         </div>
+                        <center>
+                            <a class="btn next-button" href="#position" data-toggle="tab" class="" >التالي</a>
+                            <a class="btn prev-button" href="#contract" data-toggle="tab"  >السابق</a>
+                        </center>
                     </div>
                     <div class="tab-pane" id="position">
-                                            <label>اختر مكان العمل:</label>
-                                            <div class="col-md-12">
-                                                <br><br>
-                                                <select  name="position" class="form-control">
-                                                  <?php
-                                                  $ps = \App\Position::all();
-                                                   ?>
-                                                    <?php $__currentLoopData = $ps; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                        <option value="<?php echo e($p->id); ?>"><?php echo e($p->title); ?></option>
-                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                </select>
-                                                  <br><br>
-                                            </div>
-
+                        <h3>
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                            تحديد موقع العمل
+                        </h3>
+                        <label>اختر مكان العمل:</label>
+                        <div class="col-md-12">
+                            <br><br>
+                            <select  name="position" class="form-control">
+                              <?php
+                              $ps = \App\Position::all();
+                               ?>
+                                <?php $__currentLoopData = $ps; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($p->id); ?>"><?php echo e($p->title); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                              <br><br>
+                        </div>
+                        <center>
+                            <a class="btn prev-button" href="#attachment" data-toggle="tab" >السابق</a>
+                        </center>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <center>
+        <?php echo Form::submit(trans('quickadmin.qa_update'), ['class' => 'btn btn-danger save-button']); ?>
 
-    <?php echo Form::submit(trans('quickadmin.qa_update'), ['class' => 'btn btn-danger']); ?>
-
+    </center>
     <?php echo Form::close(); ?>
 
 <?php $__env->stopSection(); ?>

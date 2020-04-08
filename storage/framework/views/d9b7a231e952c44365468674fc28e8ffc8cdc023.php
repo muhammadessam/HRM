@@ -126,18 +126,37 @@
            <h5>الاجازات المتاحة</h5>
            <ul class="list-group">
                <?php $cc = 0 ?>
-               <?php $__currentLoopData = $my_user->deservedVacations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                   <li class="list-group-item">
-                       <?php echo e($item->name); ?>
+               <?php if($my_user->usedVacations->count() > 0): ?>
+                   <?php $__currentLoopData = $my_user->usedVacations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $vac): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                       <?php $__currentLoopData = $my_user->deservedVacations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                           <?php if($vac->vacation_id != $item->pivot->vacation_id): ?>
+                           <li class="list-group-item">
+                               <?php echo e($item->name); ?>
 
-                       <form method="post" action="./vacation/request">
-                           <?php echo csrf_field(); ?>
-                           <input type="hidden" name="user_id" value="<?php echo e(auth()->user()->id); ?>">
-                           <input type="hidden" name="vac_id" value="<?php echo e($item->pivot->vacation_id); ?>">
-                           <button type="submit" class="btn btn-success">طلب اجازة</button>
-                       </form>
-                   </li>
-               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                               <form method="post" action="<?php echo e(route('admin.make_vac_request')); ?>">
+                                   <?php echo csrf_field(); ?>
+                                   <input type="hidden" name="user_id" value="<?php echo e(auth()->user()->id); ?>">
+                                   <input type="hidden" name="vac_id" value="<?php echo e($item->pivot->vacation_id); ?>">
+                                   <button type="submit" class="btn btn-success">طلب اجازة</button>
+                               </form>
+                           </li>
+                           <?php endif; ?>
+                       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+               <?php else: ?>
+                   <?php $__currentLoopData = $my_user->deservedVacations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                       <li class="list-group-item">
+                           <?php echo e($item->name); ?>
+
+                           <form method="post" action="<?php echo e(route('admin.make_vac_request')); ?>">
+                               <?php echo csrf_field(); ?>
+                               <input type="hidden" name="user_id" value="<?php echo e(auth()->user()->id); ?>">
+                               <input type="hidden" name="vac_id" value="<?php echo e($item->pivot->vacation_id); ?>">
+                               <button type="submit" class="btn btn-success">طلب اجازة</button>
+                           </form>
+                       </li>
+                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+               <?php endif; ?>
            </ul>
            <h5>الاجازات المستخدمة</h5>
            <ul class="list-group">
@@ -183,7 +202,7 @@
    <?php endif; ?>
     <?php if(auth()->user()->hasRole(1)): ?>
     <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-4">
         <div class="card gradient-1">
             <div class="card-body">
                 <h3 class="card-title text-white">الموظفين</h3>
@@ -196,7 +215,7 @@
             </div>
         </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <div class="card gradient-1">
                 <div class="card-body">
                     <h3 class="card-title text-white">الموظفين الغائبين</h3>
@@ -209,7 +228,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <div class="card gradient-1">
                 <div class="card-body">
                     <h3 class="card-title text-white">الموظفين المجازين</h3>
@@ -222,12 +241,41 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
-        <div class="card gradient-1">
+
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card gradient-1">
                 <div class="card-body">
                     <h3 class="card-title text-white">الغياب اليومي</h3>
                     <div class="d-inline-block">
                         <h2 class="text-white"><?php echo e($attendance_ratio); ?>%</h2>
+                    </div>
+                    <span class="float-left display-5 opacity-5">
+                        <i class="fa fa-building" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card gradient-1">
+                <div class="card-body">
+                    <h3 class="card-title text-white">الموظفين الحاضرين</h3>
+                    <div class="d-inline-block">
+                        <h2 class="text-white"><?php echo e($presents->count()); ?></h2>
+                    </div>
+                    <span class="float-left display-5 opacity-5">
+                        <i class="fa fa-building" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card gradient-1">
+                <div class="card-body">
+                    <h3 class="card-title text-white">الموظفون المتأخرون </h3>
+                    <div class="d-inline-block">
+                        <h2 class="text-white"><?php echo e($lateUsers->count()); ?></h2>
                     </div>
                     <span class="float-left display-5 opacity-5">
                         <i class="fa fa-building" aria-hidden="true"></i>

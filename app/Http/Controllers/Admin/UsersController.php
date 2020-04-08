@@ -95,7 +95,7 @@ class UsersController extends Controller
 
         $this->authorize('create', User::class);
 
-        $roles = Role::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '4');
+        $roles = Role::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '0');
         $degrees = Degree::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '0');
         $departments = Department::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '0');
         $specialties = Specialty::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '0');
