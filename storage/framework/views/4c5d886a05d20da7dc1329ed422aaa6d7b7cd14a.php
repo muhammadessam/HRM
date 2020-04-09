@@ -18,8 +18,26 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </a>
-
-
+        <div class="dropdown my-account">
+            <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-user"></i>
+                <span><?php echo app('translator')->getFromJson('quickadmin.account.title'); ?></span>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item btn-block" href="<?php echo e(route('admin.users.show', auth()->id())); ?>">
+                    <i class="fa fa-user"></i>
+                    <span><?php echo app('translator')->getFromJson('quickadmin.users.profile'); ?></span>
+                </a>
+                <a class="dropdown-item btn-block" href="<?php echo e(route('auth.change_password')); ?>">
+                    <i class="fa fa-key"></i>
+                    <span class="title"><?php echo app('translator')->getFromJson('quickadmin.qa_change_password'); ?></span>
+                </a>
+                <a href="#logout" class="dropdown-item btn-block" onclick="$('#logout').submit();">
+                    <i class="fa fa-arrow-left"></i>
+                    <span class="title"><?php echo app('translator')->getFromJson('quickadmin.qa_logout'); ?></span>
+                </a>
+            </div>
+        </div>
 
 
 

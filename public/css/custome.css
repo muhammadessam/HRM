@@ -96,3 +96,16 @@ input:checked + .slider:before {
     margin: 0 37px !important;
     line-height: 37px !important;
 }
+.my-account{
+    float:left;
+    color: #f4f4f4;
+    margin: 10px 50px;
+    font-size: 15px;
+    font-family: adobe-arabic;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+}
+.my-account button{
+    color: white;
+    font-size: 15px;
+}
