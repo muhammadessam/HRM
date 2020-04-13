@@ -162,4 +162,5 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('vacation/request','Admin\UsersController@makeRequest')->name('make_vac_request');
     Route::post('vacation/request/accept','Admin\UsersController@acceptReq')->name('accept_vac_request');
     Route::post('vacation/request/refuse','Admin\UsersController@refuseReq')->name('refuse_vac_request');
+    Route::get('notifications','Admin\UsersController@nots')->name('nots');
 });

@@ -14,50 +14,50 @@ $ps = \App\Position::all();
 
         <div class="panel-body">
             <div class="nav-tabs-custom">
-{{--                <ul class="nav nav-tabs">--}}
-{{--                    <li class="active" style="width:15%;">--}}
-{{--                      <center>--}}
-{{--                        <a href="#basic" data-toggle="tab"--}}
-{{--                           aria-expanded="true" style="font-size:20px;color:#000;">--}}
-{{--                           @lang('quickadmin.users.infos.basic')--}}
-{{--                         </a>--}}
-{{--                       </center>--}}
-{{--                    </li>--}}
-{{--                    <li style="width:15%;">--}}
-{{--                      <center>--}}
-{{--                        <a href="#skills" data-toggle="tab" style="font-size:20px;color:#000;"--}}
-{{--                           aria-expanded="true">@lang('quickadmin.users.infos.skills')</a>--}}
-{{--                      </center>--}}
-{{--                    </li>--}}
-{{--                    <li style="width:15%;">--}}
-{{--                      <center>--}}
-{{--                        <a href="#hiring" data-toggle="tab" style="font-size:20px;color:#000;"--}}
-{{--                           aria-expanded="true">@lang('quickadmin.users.infos.hiring')</a>--}}
-{{--                           </center>--}}
-{{--                    </li>--}}
-{{--                    <li style="width:15%;">--}}
-{{--                      <center>--}}
-{{--                        <a href="#contract" data-toggle="tab" style="font-size:20px;color:#000;"--}}
-{{--                           aria-expanded="true">@lang('quickadmin.users.infos.contract')</a>--}}
-{{--                           </center>--}}
-{{--                    </li>--}}
-{{--                    <li style="width:15%;">--}}
-{{--                      <center>--}}
-{{--                        <a href="#attachment" data-toggle="tab" style="font-size:20px;color:#000;"--}}
-{{--                           aria-expanded="true">@lang('quickadmin.users.infos.attachments')</a>--}}
-{{--                           </center>--}}
-{{--                    </li>--}}
-{{--                    <li style="width:15%;">--}}
-{{--                      <center>--}}
-{{--                        <a href="#position" data-toggle="tab" style="font-size:20px;color:#000;"--}}
-{{--                           aria-expanded="true">--}}
-{{--                           <i class="fa fa-map-marker" aria-hidden="true"></i>--}}
-{{--                           تحديد موقع العمل--}}
-{{--                         </a>--}}
-{{--                           </center>--}}
-{{--                    </li>--}}
-{{--                </ul>--}}
-{{--                <hr>--}}
+                <ul class="nav nav-tabs">
+                    <li id="1" class="active" style="width:15%;">
+                      <center>
+                        <a href="#basic" data-toggle="tab"
+                           aria-expanded="true" style="font-size:20px;color:#000;">
+                           @lang('quickadmin.users.infos.basic')
+                         </a>
+                       </center>
+                    </li>
+                    <li id="2" style="width:15%;">
+                      <center>
+                        <a href="#skills" data-toggle="tab" style="font-size:20px;color:#000;"
+                           aria-expanded="true">@lang('quickadmin.users.infos.skills')</a>
+                      </center>
+                    </li>
+                    <li id="3" style="width:15%;">
+                      <center>
+                        <a href="#hiring" data-toggle="tab" style="font-size:20px;color:#000;"
+                           aria-expanded="true">@lang('quickadmin.users.infos.hiring')</a>
+                           </center>
+                    </li>
+                    <li id="4" style="width:15%;">
+                      <center>
+                        <a href="#contract" data-toggle="tab" style="font-size:20px;color:#000;"
+                           aria-expanded="true">@lang('quickadmin.users.infos.contract')</a>
+                           </center>
+                    </li>
+                    <li id="5" style="width:15%;">
+                      <center>
+                        <a href="#attachment" data-toggle="tab" style="font-size:20px;color:#000;"
+                           aria-expanded="true">@lang('quickadmin.users.infos.attachments')</a>
+                           </center>
+                    </li>
+                    <li id="6" style="width:15%;">
+                      <center>
+                        <a href="#position" data-toggle="tab" style="font-size:20px;color:#000;"
+                           aria-expanded="true">
+                           <i class="fa fa-map-marker" aria-hidden="true"></i>
+                           تحديد موقع العمل
+                         </a>
+                           </center>
+                    </li>
+                </ul>
+                <hr>
                 <div class="tab-content">
                     <div class="tab-pane active" id="basic">
                         <h3>
@@ -116,7 +116,7 @@ $ps = \App\Position::all();
                                 @endif
                                 <div>
                                     <label>
-                                        {!! Form::radio('sex', 'm', false, ['required' => '']) !!}
+                                        {!! Form::radio('sex', 'checked','m', false, ['required' => '']) !!}
                                         ذكر
                                     </label>
                                 </div>
@@ -222,7 +222,7 @@ $ps = \App\Position::all();
                                     الحضور
                                 </label>
                                 <label class="switch">
-                                    <input type="checkbox">
+                                    <input type="checkbox" name="in_not" value="1">
                                     <span class="slider round"></span>
                                 </label>
                             </div>
@@ -231,7 +231,7 @@ $ps = \App\Position::all();
                                     اذن الدخول
                                 </label>
                                 <label class="switch">
-                                    <input type="checkbox">
+                                    <input type="checkbox" name="in_req_not" value="1">
                                     <span class="slider round"></span>
                                 </label>
                             </div>
@@ -240,7 +240,7 @@ $ps = \App\Position::all();
                                     اذن الخروج
                                 </label>
                                 <label class="switch">
-                                    <input type="checkbox">
+                                    <input type="checkbox" name="out_req_not" value="1">
                                     <span class="slider round"></span>
                                 </label>
                             </div>
@@ -249,14 +249,14 @@ $ps = \App\Position::all();
                                     الانصراف
                                 </label>
                                 <label class="switch">
-                                    <input type="checkbox">
+                                    <input type="checkbox" name="out_not" value="1">
                                     <span class="slider round"></span>
                                 </label>
                             </div>
 
                         </div>
                         <center>
-                        <a class="btn next-button" href="#skills" data-toggle="tab" >التالي</a>
+                        <button class="btn next-button" href="#skills" data-toggle="tab" disabled="disabled" id="next-basic" >التالي</button>
                         </center>
                     </div>
                     <div class="tab-pane" id="skills">
@@ -342,8 +342,8 @@ $ps = \App\Position::all();
                             </div>
                         </div>
                         <center>
-                        <a class="btn next-button" href="#hiring" data-toggle="tab" >التالي</a>
-                        <a class="btn prev-button" href="#basic" data-toggle="tab">السابق</a>
+                        <a class="btn next-button" id="next-skills" href="#hiring" data-toggle="tab" >التالي</a>
+                        <a class="btn prev-button" id="prev-skills" href="#basic" data-toggle="tab">السابق</a>
                         </center>
                     </div>
                     <div class="tab-pane" id="hiring">
@@ -395,8 +395,8 @@ $ps = \App\Position::all();
                             </div>
                         </div>
                         <center>
-                        <a class="btn next-button" href="#contract" data-toggle="tab"  >التالي</a>
-                        <a class="btn prev-button" href="#skills" data-toggle="tab"  >السابق</a>
+                        <a class="btn next-button" id="next-hiring" href="#contract" data-toggle="tab"  >التالي</a>
+                        <a class="btn prev-button" id="prev-hiring" href="#skills" data-toggle="tab"  >السابق</a>
                         </center>
                     </div>
                     <div class="tab-pane" id="contract">
@@ -426,8 +426,8 @@ $ps = \App\Position::all();
                             </div>
                         </div>
                         <center>
-                            <a class="btn next-button" href="#attachment" data-toggle="tab" >التالي</a>
-                            <a class="btn prev-button" href="#hiring" data-toggle="tab"  >السابق</a>
+                            <a class="btn next-button" id="next-contract" href="#attachment" data-toggle="tab" >التالي</a>
+                            <a class="btn prev-button" id="prev-contract" href="#hiring" data-toggle="tab"  >السابق</a>
                         </center>
                     </div>
                     <div class="tab-pane" id="attachment">
@@ -458,8 +458,8 @@ $ps = \App\Position::all();
                             </div>
                         </div>
                         <center>
-                            <a class="btn next-button" href="#position" data-toggle="tab" class="" >التالي</a>
-                            <a class="btn prev-button" href="#contract" data-toggle="tab"  >السابق</a>
+                            <a class="btn next-button" id="next-attachment" href="#position" data-toggle="tab" class="" >التالي</a>
+                            <a class="btn prev-button" id="prev-attachment" href="#contract" data-toggle="tab"  >السابق</a>
                         </center>
                     </div>
                     <div class="tab-pane" id="position">
@@ -478,7 +478,7 @@ $ps = \App\Position::all();
                               <br><br>
                         </div>
                         <center>
-                            <a class="btn prev-button" href="#attachment" data-toggle="tab" >السابق</a>
+                            <a class="btn prev-button" id="prev-position" href="#attachment" data-toggle="tab" >السابق</a>
                         </center>
                     </div>
                     <center><button type="submit" class="btn hos-success save-button" style="width:150px;">
@@ -553,6 +553,164 @@ $ps = \App\Position::all();
                 locale: "en",
             });
 
+        });
+    </script>
+    <script>
+        (function() {
+            $('#basic input').keyup(function() {
+
+                var empty = false;
+                $('#basic input').each(function() {
+                    if ($(this).val() == '' || $(this).val() == null) {
+                        empty = true;
+                    }
+                });
+
+                if (empty) {
+                    $('#next-basic').attr('disabled', 'disabled');
+                } else {
+                    $('#next-basic').removeAttr('disabled');
+                }
+            });
+        })();
+        (function() {
+            $('#skills input').keyup(function() {
+
+                var empty = false;
+                $('#skills input').each(function() {
+                    if ($(this).val() == '' || $(this).val() == null) {
+                        empty = true;
+                    }
+                });
+
+                if (empty) {
+                    $('#next-skills').attr('disabled', 'disabled');
+                } else {
+                    $('#next-skills').removeAttr('disabled');
+                }
+            });
+        })();
+        (function() {
+            $('#hiring input').keyup(function() {
+
+                var empty = false;
+                $('#hiring input').each(function() {
+                    if ($(this).val() == '' || $(this).val() == null) {
+                        empty = true;
+                    }
+                });
+
+                if (empty) {
+                    $('#next-hiring').attr('disabled', 'disabled');
+                } else {
+                    $('#next-hiring').removeAttr('disabled');
+                }
+            });
+        })();
+        (function() {
+            $('#contract input').keyup(function() {
+
+                var empty = false;
+                $('#contract input').each(function() {
+                    if ($(this).val() == '' || $(this).val() == null) {
+                        empty = true;
+                    }
+                });
+
+                if (empty) {
+                    $('#next-contract').attr('disabled', 'disabled');
+                } else {
+                    $('#next-contract').removeAttr('disabled');
+                }
+            });
+        })();
+        (function() {
+            $('#attachment input').keyup(function() {
+
+                var empty = false;
+                $('#attachment input').each(function() {
+                    if ($(this).val() == '' || $(this).val() == null) {
+                        empty = true;
+                    }
+                });
+
+                if (empty) {
+                    $('#next-attachment').attr('disabled', 'disabled');
+                } else {
+                    $('#next-attachment').removeAttr('disabled');
+                }
+            });
+        })();
+
+        $('#next-basic').on('click', function(e){
+
+            $('#1')
+                .removeClass('active');
+            $('#2')
+                .addClass('active');
+        });
+        $('#next-skills').on('click', function(e){
+
+            $('#2')
+                .removeClass('active');
+            $('#3')
+                .addClass('active');
+        });
+        $('#prev-skills').on('click', function(e){
+
+            $('#2')
+                .removeClass('active');
+            $('#1')
+                .addClass('active');
+        });
+        $('#next-hiring').on('click', function(e){
+
+            $('#3')
+                .removeClass('active');
+            $('#4')
+                .addClass('active');
+        });
+        $('#prev-hiring').on('click', function(e){
+
+            $('#3')
+                .removeClass('active');
+            $('#2')
+                .addClass('active');
+        });
+        $('#next-contract').on('click', function(e){
+
+            $('#4')
+                .removeClass('active');
+            $('#5')
+                .addClass('active');
+        });
+        $('#prev-contract').on('click', function(e){
+
+            $('#4')
+                .removeClass('active');
+            $('#3')
+                .addClass('active');
+        });
+        $('#next-attachment').on('click', function(e){
+
+            $('#5')
+                .removeClass('active');
+            $('#6')
+                .addClass('active');
+        });
+        $('#prev-attachment').on('click', function(e){
+
+            $('#5')
+                .removeClass('active');
+            $('#4')
+                .addClass('active');
+        });
+        $('#prev-position').on('click', function(e){
+
+            $('#6')
+                .removeClass('active');
+            $('#5')
+                .addClass('active');
         });
     </script>
 

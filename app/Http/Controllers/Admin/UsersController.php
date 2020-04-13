@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUsersRequest;
 use App\Http\Requests\Admin\UpdateUsersRequest;
 use App\LeavingComing;
+use App\Notifications;
 use App\Specialty;
 use App\UsedVacation;
 use App\User;
@@ -95,7 +96,7 @@ class UsersController extends Controller
 
         $this->authorize('create', User::class);
 
-        $roles = Role::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '0');
+        $roles = Role::get()->pluck('name', 'id');
         $degrees = Degree::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '0');
         $departments = Department::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '0');
         $specialties = Specialty::get()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '0');
@@ -141,11 +142,14 @@ class UsersController extends Controller
         );
         $this->authorize('create', User::class);
 
-
         DB::transaction(function () use ($request) {
             $user = User::create($request->all());
             $user->roles()->sync([$request->role_id]);
-
+            $user->in_not       = $request->in_not      != null?1:0;
+            $user->out_not      = $request->out_not     != null?1:0;
+            $user->in_req_not   = $request->in_req_not  != null?1:0;
+            $user->out_req_not  = $request->out_req_not != null?1:0;
+            $user->save();
             foreach ($request->input('courses', []) as $data) {
                 $user->courses()->create($data);
             }
@@ -156,6 +160,7 @@ class UsersController extends Controller
 
             $user->deservedVacations()->attach($request->vacation_id);
         });
+
 
         return redirect()->route('admin.users.index');
     }
@@ -197,7 +202,6 @@ class UsersController extends Controller
     public function update(UpdateUsersRequest $request, $id)
     {
         $this->authorize('update', User::class);
-
         $user = User::findOrFail($id);
         $updateData = $request->all();
         if ($request->isDate == 'm' and !empty($request->birth_date_m)) {
@@ -220,6 +224,11 @@ class UsersController extends Controller
             $user->deservedVacations()->attach($request->vacation_id);
         });
 
+        $user->in_not       = $request->in_not      != null?1:0;
+        $user->out_not      = $request->out_not     != null?1:0;
+        $user->in_req_not   = $request->in_req_not  != null?1:0;
+        $user->out_req_not  = $request->out_req_not != null?1:0;
+        $user->save();
         return redirect()->route('admin.users.index');
     }
 
@@ -383,6 +392,10 @@ class UsersController extends Controller
             'status' => 'refused',
         ]);
         return Redirect::back();
+    }
+    public function nots(){
+        $nots = Notifications::all()->sortByDesc('id');
+        return view('notification',["nots" => $nots]);
     }
 
 }

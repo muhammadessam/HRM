@@ -38,8 +38,14 @@
                                     <span>@lang('quickadmin.experiences.title')</span>
                                 </a>
                             </li>
-                        @endcan
 
+                        @endcan
+                            <li>
+                                <a href="{{ route('admin.nots') }}">
+                                    <i class="fa fa-expand"></i>
+                                    <span>الاشعارات</span>
+                                </a>
+                            </li>
                         @can('course_access')
                             <li>
                                 <a href="{{ route('admin.courses.index') }}">
@@ -191,7 +197,7 @@
                             <li>
                                 <a href="{{ route('admin.assign_working_periods.index') }}">
                                     <i class="fa fa-calendar"></i>
-                                    <span>@lang('quickadmin.assign-working-periods.title')</span>
+                                    <span>تعيين دوام الاقسام</span>
                                 </a>
                             </li>
                         @endcan

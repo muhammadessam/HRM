@@ -209,7 +209,11 @@
                                     الحضور
                                 </label>
                                 <label class="switch">
-                                    <input type="checkbox">
+                                    @if($user->in_not)
+                                    <input type="checkbox" name="in_not" checked value="1">
+                                    @else
+                                    <input type="checkbox" name="in_not" value="1">
+                                    @endif
                                     <span class="slider round"></span>
                                 </label>
                             </div>
@@ -218,7 +222,11 @@
                                     اذن الدخول
                                 </label>
                                 <label class="switch">
-                                    <input type="checkbox">
+                                    @if($user->in_req_not)
+                                        <input type="checkbox" name="in_req_not" checked value="1">
+                                    @else
+                                        <input type="checkbox" name="in_req_not" value="1">
+                                    @endif
                                     <span class="slider round"></span>
                                 </label>
                             </div>
@@ -227,7 +235,11 @@
                                     اذن الخروج
                                 </label>
                                 <label class="switch">
-                                    <input type="checkbox">
+                                    @if($user->out_req_not)
+                                        <input type="checkbox" name="out_req_not" checked value="1">
+                                    @else
+                                        <input type="checkbox" name="out_req_not" value="1">
+                                    @endif
                                     <span class="slider round"></span>
                                 </label>
                             </div>
@@ -236,7 +248,11 @@
                                     الانصراف
                                 </label>
                                 <label class="switch">
-                                    <input type="checkbox">
+                                    @if($user->out_not)
+                                        <input type="checkbox" name="out_not" checked value="1">
+                                    @else
+                                        <input type="checkbox" name="out_not" value="1">
+                                    @endif
                                     <span class="slider round"></span>
                                 </label>
                             </div>

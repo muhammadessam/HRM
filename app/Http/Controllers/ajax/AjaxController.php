@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ajax;
 
+use App\Notifications;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Storage;
@@ -115,11 +116,7 @@ public function store($p , $user)
             else
             {
               $p = $this->getperiod($r->input('time'));
-              $period = WorkingPeriod::find($p);
-              $pointing = Pointing::all()
-                    ->where('user_id',auth()->user()->id)
-                    ->where('supposed_out',$period->finishes_at_time)
-                    ->where('day',date('Y-m-d',time()))->last();
+
               if($p == -1)
               {
                 $status->status = 'l';
@@ -128,6 +125,11 @@ public function store($p , $user)
                 $data[1] = 'الفترة التي تم اختيارها لا تتناسب مع فترات الموظف';
               }else
               {
+                  $period = WorkingPeriod::find($p);
+                  $pointing = Pointing::all()
+                      ->where('user_id',auth()->user()->id)
+                      ->where('supposed_out','<=',$period->finishes_at_time)
+                      ->where('day',date('Y-m-d',time()))->last();
                 if(strtotime($r->input('time')) - strtotime('TODAY') < $this->getScondTime($period->when_no_out_time))
                 {
                   $data[0] = 0;
@@ -139,6 +141,14 @@ public function store($p , $user)
                 $pointing->save();
                   $status->status = 'l';
                   $status->save();
+                  if(auth()->user()->out_not){
+                      $not = new Notifications();
+                      $not->type = "out";
+                      $not->user_id = auth()->user()->id;
+                      $not->date = date('Y-m-d',time()+10000);
+                      $not->time = date('h:m:s',time()+10000);
+                      $not->save();
+                  }
                   $data[0] = 1;
                   $data[1] = 'تم تسجيل خروجك بنجاح';
                 }
@@ -202,6 +212,15 @@ public function store($p , $user)
                     $newstatus = new Comleaving();
                     $newstatus->user = $user->id;
                     $newstatus->status = 'c';
+                    $user = User::find(auth()->user()->id);
+                    if($user->in_not){
+                        $not = new Notifications();
+                        $not->type = "in";
+                        $not->user_id = auth()->user()->id;
+                        $not->date = date('Y-m-d',time()+10000);
+                        $not->time = date('h:m:s',time()+10000);
+                        $not->save();
+                    }
                     $data[0] = 1;
                     $data[1] = 'تم تسجيل حضورك بنجاح';
                 }
@@ -211,6 +230,15 @@ public function store($p , $user)
                     $newstatus->user = $user->id;
                     $newstatus->status = 'c';
                     $newstatus->save();
+                    $user = User::find(auth()->user()->id);
+                    if($user->out_not){
+                        $not = new Notifications();
+                        $not->type = "in";
+                        $not->user_id = auth()->user()->id;
+                        $not->date = date('Y-m-d',time()+10000);
+                        $not->time = date('h:m:s',time()+10000);
+                        $not->save();
+                    }
                     $data[0] = 1;
                     $data[1] = 'تم تسجيل حضورك بنجاح';
                 }

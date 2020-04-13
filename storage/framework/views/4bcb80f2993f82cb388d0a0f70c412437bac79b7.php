@@ -38,8 +38,14 @@
                                     <span><?php echo app('translator')->getFromJson('quickadmin.experiences.title'); ?></span>
                                 </a>
                             </li>
-                        <?php endif; ?>
 
+                        <?php endif; ?>
+                            <li>
+                                <a href="<?php echo e(route('admin.nots')); ?>">
+                                    <i class="fa fa-expand"></i>
+                                    <span>الاشعارات</span>
+                                </a>
+                            </li>
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('course_access')): ?>
                             <li>
                                 <a href="<?php echo e(route('admin.courses.index')); ?>">
@@ -191,7 +197,7 @@
                             <li>
                                 <a href="<?php echo e(route('admin.assign_working_periods.index')); ?>">
                                     <i class="fa fa-calendar"></i>
-                                    <span><?php echo app('translator')->getFromJson('quickadmin.assign-working-periods.title'); ?></span>
+                                    <span>تعيين دوام الاقسام</span>
                                 </a>
                             </li>
                         <?php endif; ?>
@@ -208,7 +214,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    
+
                 </ul>
             </li>
             <li class="treeview">

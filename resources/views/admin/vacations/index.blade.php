@@ -57,10 +57,42 @@
 
                                 <td field-key='name'>{{ $vacation->name }}</td>
                                 <td field-key='days'>{{ $vacation->days }}</td>
-                                <td field-key='repetition'>{{ $vacation->repetition }}</td>
-                                <td field-key='accumulated'>{{ $vacation->accumulated }}</td>
-                                <td field-key='salary_affected'>{{ $vacation->salary_affected }}</td>
-                                <td field-key='can_be_exceeded'>{{ $vacation->can_be_exceeded }}</td>
+                                <td field-key='repetition'>
+                                    @if($vacation->repetition == "y")
+                                        سنويا
+                                    @elseif($vacation->repetition == "c")
+                                        للفرد
+                                    @else
+                                        لم تحدد بعد
+                                    @endif
+                                </td>
+                                <td field-key='accumulated'>
+                                    @if($vacation->accumulated == "y")
+                                        نعم
+                                    @elseif($vacation->accumulated == "n")
+                                        لا
+                                    @else
+                                        لم تحدد بعد
+                                    @endif
+                                </td>
+                                <td field-key='salary_affected'>
+                                    @if($vacation->salary_affected == "y")
+                                        نعم
+                                    @elseif($vacation->salary_affected == "n")
+                                        لا
+                                    @else
+                                        لم تحدد بعد
+                                    @endif
+                                </td>
+                                <td field-key='can_be_exceeded'>
+                                    @if( $vacation->can_be_exceeded == "y")
+                                        نعم
+                                    @elseif( $vacation->can_be_exceeded == "n")
+                                        لا
+                                    @else
+                                        لم تحدد بعد
+                                    @endif
+                                </td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     @can('vacation_delete')

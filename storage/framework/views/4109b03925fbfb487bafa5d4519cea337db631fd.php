@@ -23,7 +23,7 @@ $status = \App\Model\Comleaving::where('user' , auth()->user()->id)->orderBy('cr
                               <input type="text" class="form-control" id="code" value="">
                               <input type="hidden" value="0" id="lng">
                               <input type="hidden" value="0" id="lat">
-                              <input type="hidden" value="<?php echo e(date('H:m',time()+10000)); ?>" id="time">
+                              <input type="hidden" value="<?php echo e(date('H:m',time()+9000)); ?>" id="time">
                               <small class="form-text text-muted">
                                 قم بمسح الباركود المرسل اليك من طرف الادارة
                               </small>

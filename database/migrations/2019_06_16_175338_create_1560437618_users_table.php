@@ -32,7 +32,12 @@ class Create1560437618UsersTable extends Migration
                 $table->date('hire_date')->nullable();
                 $table->date('hire_end')->nullable();
                 $table->string('end_reason')->nullable();
-
+                // user notifactions
+                $table->boolean('in_not')->default(0);
+                $table->boolean('out_not')->default(0);
+                $table->boolean('in_req_not')->default(0);
+                $table->boolean('out_req_not')->default(0);
+                //>
                 $table->timestamps();
                 $table->softDeletes();
                 $table->rememberToken();
